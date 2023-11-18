@@ -13,7 +13,7 @@ const MenuDropdown = () => {
       return (
             <div className='relative'>
                   <div className='flex flex-row items-center gap-3'>
-                        <div className='hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer'>
+                        <div className='hidden md:block text-sm font-semibold py-2 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer'>
                               Paradise Found Your Home
                         </div>
                         <div
@@ -22,7 +22,7 @@ const MenuDropdown = () => {
                         >
                               <AiOutlineMenu />
                               <div className='hidden md:block'>
-                                    {user && user.photoURL ? user.photoURL : <FaHouseUser className='text-2xl' />}
+                                    {user && user.photoURL ? user.photoURL : <FaHouseUser className='text-xl' />}
                               </div>
                         </div>
                   </div>
