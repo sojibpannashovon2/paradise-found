@@ -22,7 +22,7 @@ const MenuDropdown = () => {
                         >
                               <AiOutlineMenu />
                               <div className='hidden md:block'>
-                                    {user && user.photoURL ? user.photoURL : <FaHouseUser className='text-xl' />}
+                                    {user && user.photoURL ? <img className='w-6 h-6 rounded-lg' src={user.photoURL} alt="" /> : <FaHouseUser className='text-xl' />}
                               </div>
                         </div>
                   </div>

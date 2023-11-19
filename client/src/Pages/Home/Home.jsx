@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Container from '../component/Shared/Container';
-import Catagories from '../component/Catagories/Catagories';
+import Container from '../../component/Shared/Container';
+import Catagories from '../../component/Catagories/Catagories';
 
 const Home = () => {
       return (
