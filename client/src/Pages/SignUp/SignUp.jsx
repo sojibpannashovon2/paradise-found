@@ -1,29 +1,36 @@
 import { Link, useNavigate } from 'react-router-dom'
-import toast from "react-hot-toast"
+import { ImSpinner4 } from "react-icons/im";
 import { FcGoogle } from 'react-icons/fc'
 import { useContext } from 'react'
 import { AuthContext } from '../../providers/AuthProvider'
-import { TbFidgetSpinner } from "react-icons/tb";
-const Login = () => {
+import toast from "react-hot-toast"
+const SignUp = () => {
+      const navigate = useNavigate()
+      const { setLoading, createUser, signInWithGoogle, updateUserProfile, loading } = useContext(AuthContext)
 
-      const { loading, setLoading, createUser, signIn, signInWithGoogle, resetPassword,
-            updateUserProfile } = useContext(AuthContext);
-      const navigate = useNavigate();
-
-      //handle emailPasswordLogin
+      //Handle SignUp Function
       const handleSubmit = (event) => {
             event.preventDefault();
             const email = event.target.email.value;
             const password = event.target.password.value;
-            console.log(email, password);
-            signIn(email, password).then(result => {
-                  console.log(result.user);
+            const name = event.target.name.value;
+            const image = event.target.image.value;
+            createUser(email, password).then(loggedUser => {
+                  console.log(loggedUser.user);
+                  updateUserProfile(name, image).then(result => {
+                        console.log(result.user);
+                  }).catch(err => {
+                        setLoading(false)
+                        console.log(err.message);
+                        toast.error(err.message)
+                  })
                   navigate('/')
             }).catch(err => {
                   setLoading(false)
                   console.log(err.message);
                   toast.error(err.message)
             })
+            console.log(email, password, name, image);
       }
       //handle google signin
       const handleGoogleSign = () => {
@@ -39,13 +46,11 @@ const Login = () => {
 
       }
       return (
-            <div className='flex justify-center items-center min-h-screen pt-2 shadow-lg'>
-                  <div className='flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900'>
-                        <div className='mb-8 text-center'>
-                              <h1 className='my-3 text-4xl font-bold'>Log In</h1>
-                              <p className='text-sm text-gray-400'>
-                                    Sign in to access your account
-                              </p>
+            <div className='flex justify-center items-center min-h-screen'>
+                  <div className='flex flex-col max-w-md px-6 rounded-md sm:p-10 bg-gray-100 text-gray-900'>
+                        <div className='mb-4 text-center'>
+                              <h1 className='my-2 text-4xl font-bold'>Sign Up</h1>
+                              <p className='text-sm text-gray-400'>Welcome to Paradise Found</p>
                         </div>
                         <form
                               onSubmit={handleSubmit}
@@ -54,6 +59,31 @@ const Login = () => {
                               className='space-y-6 ng-untouched ng-pristine ng-valid'
                         >
                               <div className='space-y-4'>
+                                    <div>
+                                          <label htmlFor='email' className='block mb-2 text-sm'>
+                                                Name
+                                          </label>
+                                          <input
+                                                type='text'
+                                                name='name'
+                                                id='name'
+                                                placeholder='Enter Your Name Here'
+                                                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900'
+                                                data-temp-mail-org='0'
+                                          />
+                                    </div>
+                                    <div>
+                                          <label htmlFor='image' className='block mb-2 text-sm'>
+                                                Select Image:
+                                          </label>
+                                          <input
+                                                required
+                                                type='file'
+                                                id='image'
+                                                name='image'
+                                                accept='image/*'
+                                          />
+                                    </div>
                                     <div>
                                           <label htmlFor='email' className='block mb-2 text-sm'>
                                                 Email address
@@ -90,19 +120,14 @@ const Login = () => {
                                           type='submit'
                                           className='bg-blue-500 w-full rounded-md py-3 text-white'
                                     >
-                                          {loading ? <TbFidgetSpinner size={24} className='m-auto animate-spin' /> : "Continue"}
+                                          {loading ? <ImSpinner4 size={24} className='m-auto animate-spin' /> : "Continue"}
                                     </button>
                               </div>
                         </form>
-                        <div className='space-y-1'>
-                              <button className='text-xs hover:underline hover:text-rose-500 text-gray-400'>
-                                    Forgot password?
-                              </button>
-                        </div>
                         <div className='flex items-center pt-4 space-x-1'>
                               <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
                               <p className='px-3 text-sm dark:text-gray-400'>
-                                    Login with social accounts
+                                    Signup with social accounts
                               </p>
                               <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
                         </div>
@@ -112,12 +137,12 @@ const Login = () => {
                               <p>Continue with Google</p>
                         </div>
                         <p className='px-6 text-sm text-center text-gray-400'>
-                              Don't have an account yet?{' '}
+                              Already have an account?{' '}
                               <Link
-                                    to='/signup'
+                                    to='/login'
                                     className='hover:underline hover:text-rose-500 text-gray-600'
                               >
-                                    Sign up
+                                    Login
                               </Link>
                               .
                         </p>
@@ -126,4 +151,4 @@ const Login = () => {
       )
 }
 
-export default Login
+export default SignUp
