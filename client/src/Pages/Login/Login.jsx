@@ -1,15 +1,17 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import toast from "react-hot-toast"
 import { FcGoogle } from 'react-icons/fc'
-import { useContext } from 'react'
+import { useContext, useRef } from 'react'
 import { AuthContext } from '../../providers/AuthProvider'
 import { TbFidgetSpinner } from "react-icons/tb";
 const Login = () => {
 
-      const { loading, setLoading, createUser, signIn, signInWithGoogle, resetPassword,
-            updateUserProfile } = useContext(AuthContext);
+      const { loading, setLoading, signIn, signInWithGoogle, resetPassword, } = useContext(AuthContext);
       const navigate = useNavigate();
+      const location = useLocation();
+      const emailRef = useRef();
 
+      const from = location?.state?.pathname || '/'
       //handle emailPasswordLogin
       const handleSubmit = (event) => {
             event.preventDefault();
@@ -18,7 +20,7 @@ const Login = () => {
             console.log(email, password);
             signIn(email, password).then(result => {
                   console.log(result.user);
-                  navigate('/')
+                  navigate(from, { replace: true });
             }).catch(err => {
                   setLoading(false)
                   console.log(err.message);
@@ -29,7 +31,7 @@ const Login = () => {
       const handleGoogleSign = () => {
             signInWithGoogle().then(result => {
                   console.log(result?.user);
-                  navigate('/')
+                  navigate(from, { replace: true });
 
             }).catch(err => {
                   setLoading(false)
@@ -37,6 +39,19 @@ const Login = () => {
                   toast.error(err.message)
             })
 
+      }
+
+      //Handle Resset Password
+      const handleReset = () => {
+            const email = emailRef.current.value;
+            resetPassword(email).then(() => {
+                  setLoading(false)
+                  toast.success(`Please check email that you have find the reset link`)
+            }).catch(err => {
+                  setLoading(false)
+                  console.log(err.message);
+                  toast.error(err.message)
+            })
       }
       return (
             <div className='flex justify-center items-center min-h-screen pt-2 shadow-lg'>
@@ -59,6 +74,7 @@ const Login = () => {
                                                 Email address
                                           </label>
                                           <input
+                                                ref={emailRef}
                                                 type='email'
                                                 name='email'
                                                 id='email'
@@ -95,7 +111,7 @@ const Login = () => {
                               </div>
                         </form>
                         <div className='space-y-1'>
-                              <button className='text-xs hover:underline hover:text-rose-500 text-gray-400'>
+                              <button onClick={handleReset} className='text-xs hover:underline hover:text-rose-500 text-gray-400'>
                                     Forgot password?
                               </button>
                         </div>

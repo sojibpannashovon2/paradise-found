@@ -1,11 +1,13 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { ImSpinner4 } from "react-icons/im";
 import { FcGoogle } from 'react-icons/fc'
 import { useContext } from 'react'
 import { AuthContext } from '../../providers/AuthProvider'
 import toast from "react-hot-toast"
 const SignUp = () => {
-      const navigate = useNavigate()
+      const navigate = useNavigate();
+      const location = useLocation();
+      const from = location?.state?.pathname || '/'
       const { setLoading, createUser, signInWithGoogle, updateUserProfile, loading } = useContext(AuthContext)
 
       //Handle SignUp Function
@@ -14,29 +16,49 @@ const SignUp = () => {
             const email = event.target.email.value;
             const password = event.target.password.value;
             const name = event.target.name.value;
-            const image = event.target.image.value;
-            createUser(email, password).then(loggedUser => {
-                  console.log(loggedUser.user);
-                  updateUserProfile(name, image).then(result => {
-                        console.log(result.user);
+            // const image = event.target.image.value;
+
+            //image upload
+            const image = event.target.image.files[0]
+            const formData = new FormData();
+            formData.append('image', image)
+            const imgURL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`
+            console.log(imgURL);
+
+            fetch(imgURL, {
+                  method: 'POST',
+                  body: formData,
+            }).then(res => res.json())
+                  .then(imageData => {
+                        const image = imageData.data.display_url;
+                        createUser(email, password).then(loggedUser => {
+                              console.log(loggedUser.user);
+                              updateUserProfile(name, image).then(result => {
+                                    console.log(result.user);
+                              }).catch(err => {
+                                    setLoading(false)
+                                    console.log(err.message);
+                                    toast.error(err.message)
+                              })
+                              navigate(from, { replace: true });
+                        }).catch(err => {
+                              setLoading(false)
+                              console.log(err.message);
+                              toast.error(err.message)
+                        })
                   }).catch(err => {
                         setLoading(false)
                         console.log(err.message);
                         toast.error(err.message)
                   })
-                  navigate('/')
-            }).catch(err => {
-                  setLoading(false)
-                  console.log(err.message);
-                  toast.error(err.message)
-            })
-            console.log(email, password, name, image);
+
+            // console.log(email, password, name, image);
       }
       //handle google signin
       const handleGoogleSign = () => {
             signInWithGoogle().then(result => {
                   console.log(result?.user);
-                  navigate('/')
+                  navigate(from, { replace: true });
 
             }).catch(err => {
                   setLoading(false)
