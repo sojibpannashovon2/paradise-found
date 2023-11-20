@@ -33,8 +33,8 @@ const SignUp = () => {
                         const image = imageData.data.display_url;
                         createUser(email, password).then(loggedUser => {
                               console.log(loggedUser.user);
-                              updateUserProfile(name, image).then(result => {
-                                    console.log(result.user);
+                              updateUserProfile(name, image).then(() => {
+                                    toast.success(`SignUp successfull`)
                               }).catch(err => {
                                     setLoading(false)
                                     console.log(err.message);
@@ -52,7 +52,7 @@ const SignUp = () => {
                         toast.error(err.message)
                   })
 
-            // console.log(email, password, name, image);
+
       }
       //handle google signin
       const handleGoogleSign = () => {
