@@ -6,13 +6,13 @@ const AddRoomForm = ({
       handleSubmit,
       dates,
       handleDates,
-      loading = false,
+      loading,
       handleImageChange,
       uploadButtonText,
 }) => {
       return (
             <div className='w-full min-h-[calc(100vh-40px)] flex flex-col justify-center items-center text-gray-800 rounded-xl bg-gray-50'>
-                  <form>
+                  <form onSubmit={handleSubmit}>
                         <div className='grid grid-cols-1 lg:grid-cols-2 gap-10'>
                               <div className='space-y-6'>
                                     <div className='space-y-1 text-sm'>
@@ -50,7 +50,10 @@ const AddRoomForm = ({
                                           <label htmlFor='location' className='block text-gray-600'>
                                                 Select Availability Range
                                           </label>
-                                          <DateRange rangeColors={['#F43F5E']} />
+                                          <DateRange
+                                                onChange={handleDates}
+                                                ranges={[dates]}
+                                                rangeColors={['#F43F5E']} />
                                     </div>
                               </div>
                               <div className='space-y-6'>
@@ -73,6 +76,7 @@ const AddRoomForm = ({
                                                 <div className='flex flex-col w-max mx-auto text-center'>
                                                       <label>
                                                             <input
+                                                                  onChange={event => { handleImageChange(event.target.files[0]) }}
                                                                   className='text-sm cursor-pointer w-36 hidden'
                                                                   type='file'
                                                                   name='image'
@@ -81,7 +85,7 @@ const AddRoomForm = ({
                                                                   hidden
                                                             />
                                                             <div className='bg-rose-500 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-rose-500'>
-                                                                  Upload Image
+                                                                  {uploadButtonText}
                                                             </div>
                                                       </label>
                                                 </div>
