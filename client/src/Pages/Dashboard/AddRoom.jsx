@@ -3,7 +3,11 @@ import AddRoomForm from '../../component/Forms/AddRoomForm';
 import { uploadImage } from '../../Api/utils';
 import { AuthContext } from '../../providers/AuthProvider';
 
+import toast from 'react-hot-toast';
+import { addRoom } from '../../Api/rooms';
+
 const AddRoom = () => {
+
       const [loading, setLoading] = useState(false)
       const [uploadButtonText, setUploadButtonText] = useState(`Upload Image`)
       const [dates, setDates] = useState({
@@ -60,6 +64,15 @@ const AddRoom = () => {
 
                         }
                         console.log(roomData);
+                        //save room to dataBase
+                        addRoom(roomData)
+                              .then(data => {
+                                    console.log(data)
+                                    toast.success(`Room data is added successfully !!!`)
+                              })
+                              .catch(err => {
+                                    console.log(err.message);
+                              })
                         setLoading(false);
                   })
                   .catch(err => {
