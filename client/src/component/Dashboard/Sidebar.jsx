@@ -28,7 +28,7 @@ const Sidebar = () => {
                   {/* Small Screen Navbar */}
                   <div className='bg-gray-100 text-gray-800 flex justify-between md:hidden lg:overflow-hidden'>
                         <div>
-                              <div className='block cursor-pointer p-4 font-bold border-[1px] border-slate-500'>
+                              <div className='block cursor-pointer p-2 font-bold border-[1px] border-slate-500'>
                                     <Logo />
                               </div>
                         </div>
@@ -124,7 +124,7 @@ const Sidebar = () => {
 
                                     <span className='mx-4 font-medium'>Profile</span>
                               </NavLink>
-                              <NavLink
+                              {/* <NavLink
                                     to='/'
                                     className={({ isActive }) =>
                                           `flex items-center px-4 py-2 mt-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
@@ -134,7 +134,7 @@ const Sidebar = () => {
                                     <FcHome className='w-5 h-5' />
 
                                     <span className='mx-4 font-medium'>Home</span>
-                              </NavLink>
+                              </NavLink> */}
                               <button
                                     onClick={handleLogOut}
                                     className='flex w-full items-center px-4 py-2 mt-5 text-gray-600 hover:bg-gray-300   hover:text-gray-700 transition-colors duration-300 transform'

@@ -7,7 +7,7 @@ import HostModal from '../../Modal/HostRequestModal';
 import { becomeHost } from '../../../Api/auth';
 import toast from 'react-hot-toast';
 const MenuDropdown = () => {
-      const { user, logOut, role } = useContext(AuthContext);
+      const { user, logOut, role, setRole } = useContext(AuthContext);
       console.log(role);
       const [isOpen, setIsOpen] = useState(false)
       const [modal, setModal] = useState(false)
@@ -18,8 +18,10 @@ const MenuDropdown = () => {
       const modalHandler = (email) => {
             becomeHost(email)
                   .then(data => {
+
                         console.log(data);
                         toast.success(`Now you are a Host, post a room`)
+                        setRole(`host`)
                         closeModal();
                   })
             console.log(`Modal Clicked`);
@@ -31,8 +33,18 @@ const MenuDropdown = () => {
       return (
             <div className='relative'>
                   <div className='flex flex-row items-center gap-3'>
-                        <div onClick={() => setModal(true)} className='hidden md:block text-sm font-semibold py-2 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer'>
-                              Paradise Found Your Home
+                        <div className='hidden md:block text-sm font-semibold py-2 px-4 rounded-full transition '>
+
+                              {!role &&
+                                    <button
+                                          className='cursor-pointer hover:px-1 hover:border-[1px] hover:bg-blue-300 hover:rounded-md'
+                                          disabled={!user}
+                                          onClick={() => setModal(true)}>
+                                          Paradise Found Your Home
+                                    </button>
+                              }
+
+
                         </div>
                         <div
                               onClick={toggleOpen}
@@ -45,7 +57,7 @@ const MenuDropdown = () => {
                         </div>
                   </div>
                   {isOpen && (
-                        <div className='absolute rounded-xl shadow-md w-[40vw] md:w-3/4 bg-white overflow-hidden right-0 top-12 text-sm'>
+                        <div className='absolute rounded-xl shadow-md w-[40vw] md:w-[100%] bg-white overflow-hidden right-0 top-12 text-sm'>
                               <div className='flex flex-col cursor-pointer'>
                                     <Link
                                           to='/'
@@ -62,7 +74,10 @@ const MenuDropdown = () => {
                                                       Dashboard
                                                 </Link>
                                                 <div
-                                                      onClick={logOut}
+                                                      onClick={() => {
+                                                            setRole(null)
+                                                            logOut()
+                                                      }}
                                                       className='px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer'
                                                 >
                                                       Logout
