@@ -225,3 +225,144 @@ const Sidebar = () => {
 }
 
 export default Sidebar
+
+
+
+
+-----------------------------------   New Techonogy Used -------------------------------------
+
+
+
+
+
+1. React-date-range
+
+    Installation
+            npm install --save react-date-range
+
+    You need to import skeleton and theme styles first.
+
+            import 'react-date-range/dist/styles.css'; // main style file
+            import 'react-date-range/dist/theme/default.css'; // theme css file
+
+
+                          const selectionRange = {
+                          startDate: new Date(),
+                          endDate: new Date(),
+                          key: 'selection',
+                        }
+                        return (
+                          <DateRangePicker
+                            ranges={[selectionRange]}
+                            onChange={this.handleSelect}
+                          />
+                        )
+       
+
+2. React-fns
+
+    This plugin expects react and date-fns as peerDependencies, It means that you need to install them in your project folder.
+
+          npm install --save react date-fns
+
+
+            import { formatDistance } from 'date-fns'
+
+            formatDistance(date, baseDate, [options])
+
+
+              const totalPrice = parseFloat(
+                formatDistance(
+                      new Date(roomData.to),
+                      new Date(roomData.from)
+                ).split(' ')[0]
+                ) * roomData.price;
+
+3. Spinner, React-spinner(Data loader) From react-icons site
+
+    Spinner
+
+    Link: https://react-icons.github.io/react-icons/search/#q=spinner
+
+             import { ImSpinner4 } from "react-icons/im";
+
+             <ImSpinner4 />
+
+
+                              <div>
+                                    <button
+                                          type='submit'
+                                          className='bg-blue-500 w-full rounded-md py-3 text-white'
+                                    >
+                                          {loading ? <TbFidgetSpinner size={24} className='m-auto animate-spin' /> : "Continue"}
+                                    </button>
+                              </div>
+
+
+Data Loader(React Spinner)
+
+   Link: https://www.davidhu.io/react-spinners/
+
+
+   
+
+            <div
+                              className='
+                  h-[70vh]
+                  flex 
+                  flex-col 
+                  justify-center 
+                  items-center 
+                '
+                        >
+                              <PacmanLoader size={50} color='red' />
+            </div>
+
+
+4. Query-string
+
+           import qs from "query-string"
+
+
+
+       
+                import { useNavigate, useSearchParams } from 'react-router-dom';
+                import qs from "query-string"
+                const CategoryBox = ({ label, icon: Icon }) => {
+                      const [params, setParams] = useSearchParams();
+                      const value = params.get("category");
+                      // console.log(value);
+                      const navigate = useNavigate();
+
+                      const handleClick = () => {
+                            let currentQuery = {};
+                            if (params) {
+                                  currentQuery = qs.parse(params.toString())
+                            }
+                            const updateQuery = {
+                                  ...currentQuery,
+                                  category: label,
+                            }
+
+                            const url = qs.stringifyUrl(
+                                  {
+                                        url: '/',
+                                        query: updateQuery,
+                                  },
+                                  {
+                                        skipNull: true
+                                  }
+
+                            )
+                            navigate(url)
+                      }
+
+                      return (
+                            <div onClick={handleClick} className='flex flex-col items-center justify-center gap-2 p-3 border-b-2 hover:text-neutral-800 border-transparent text-neutral-500'>
+                                  <Icon size={26} />
+                                  <div className='text-sm font-medium'>{label}</div>
+                            </div>
+                      );
+                };
+
+                export default CategoryBox;

@@ -1,8 +1,31 @@
-import React from 'react';
+
 import DatePicker from './DatePicker';
 import Button from '../../component/Button/Button';
-
+import { useContext } from 'react';
+import { AuthContext } from '../../providers/AuthProvider';
+import BookingModal from '../../component/Modal/BookingModal';
+import { useState } from 'react';
+import { formatDistance } from 'date-fns'
 const RoomReservation = ({ roomData }) => {
+
+      const { user, role, setRole } = useContext(AuthContext);
+      const [isOpen, setIsOpen] = useState(false);
+      const totalPrice = parseFloat(
+            formatDistance(
+                  new Date(roomData.to),
+                  new Date(roomData.from)
+            ).split(' ')[0]
+      ) * roomData.price;
+      console.log(totalPrice);
+
+      const [bookingInfo, setBookingInfo] = useState({
+            guest: { name: user?.displayName, email: user?.email, image: user?.photoURL },
+            host: roomData?.host.email,
+            loacation: roomData?.location,
+            price: totalPrice,
+
+      })
+
       return (
             <div className='bg-white border-[1px] border-neutral-300 overflow-hidden rounded-md w-full'>
                   <div className='flex flex-row items-center gap-1 p-4'>
@@ -18,13 +41,19 @@ const RoomReservation = ({ roomData }) => {
                   </div>
 
                   <hr />
-                  <div className='p-4'><Button label={`Reserve`}></Button></div>
+                  <div className='p-4'>
+                        <Button
+                              onClick={() => setIsOpen(true)}
+                              disabled={roomData.host.email === user.email}
+                              label={`Reserve`}>
+                        </Button></div>
                   <hr />
                   <div className='flex flex-row items-center justify-between p-4 font-bold text-lg'>
                         <div>Total</div>
-                        <div>$600</div>
+                        <div>${totalPrice}</div>
 
                   </div>
+                  <BookingModal isOpen={isOpen} />
             </div>
       );
 };

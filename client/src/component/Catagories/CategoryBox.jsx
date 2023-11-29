@@ -39,3 +39,4 @@ const CategoryBox = ({ label, icon: Icon }) => {
 };
 
 export default CategoryBox;
+
