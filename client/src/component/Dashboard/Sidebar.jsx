@@ -5,7 +5,7 @@ import Logo from '../Shared/Navbar/Logo'
 import { GrLogout } from 'react-icons/gr'
 import { FcHome, FcSettings } from 'react-icons/fc'
 import { AiOutlineBars } from 'react-icons/ai'
-import { BsFillHouseAddFill } from 'react-icons/bs'
+import { BsBookFill, BsFillHouseAddFill } from 'react-icons/bs'
 const Sidebar = () => {
       const navigate = useNavigate()
       const [toggle, setToggle] = useState(false)
@@ -106,6 +106,18 @@ const Sidebar = () => {
 
                                                       <span className='mx-4 font-medium'>Add Room</span>
                                                 </NavLink>
+                                                <NavLink
+                                                      to='/dashboard/my-bookings'
+                                                      className={({ isActive }) =>
+                                                            `flex items-center px-4 py-2 mt-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
+                                                            }`
+                                                      }
+                                                >
+                                                      {/* <BsFillHouseAddFill  /> */}
+                                                      <BsBookFill className='w-5 h-5' />
+
+                                                      <span className='mx-4 font-medium'>My booking</span>
+                                                </NavLink>
                                           </>
                                     </nav>
                               </div>
@@ -124,17 +136,7 @@ const Sidebar = () => {
 
                                     <span className='mx-4 font-medium'>Profile</span>
                               </NavLink>
-                              {/* <NavLink
-                                    to='/'
-                                    className={({ isActive }) =>
-                                          `flex items-center px-4 py-2 mt-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
-                                          }`
-                                    }
-                              >
-                                    <FcHome className='w-5 h-5' />
 
-                                    <span className='mx-4 font-medium'>Home</span>
-                              </NavLink> */}
                               <button
                                     onClick={handleLogOut}
                                     className='flex w-full items-center px-4 py-2 mt-5 text-gray-600 hover:bg-gray-300   hover:text-gray-700 transition-colors duration-300 transform'

@@ -6,6 +6,8 @@ import { AuthContext } from '../../providers/AuthProvider';
 import BookingModal from '../../component/Modal/BookingModal';
 import { useState } from 'react';
 import { formatDistance } from 'date-fns'
+import { addBooking, updateStatus } from '../../Api/booking';
+import toast from 'react-hot-toast';
 const RoomReservation = ({ roomData }) => {
 
       const { user, role, setRole } = useContext(AuthContext);
@@ -16,15 +18,57 @@ const RoomReservation = ({ roomData }) => {
                   new Date(roomData.from)
             ).split(' ')[0]
       ) * roomData.price;
-      console.log(totalPrice);
+
+
+      const [value, setValue] = useState({
+            startDate: new Date(roomData?.from),
+            endDate: new Date(roomData?.from),
+            key: 'selection'
+      })
 
       const [bookingInfo, setBookingInfo] = useState({
             guest: { name: user?.displayName, email: user?.email, image: user?.photoURL },
             host: roomData?.host.email,
-            loacation: roomData?.location,
+            location: roomData?.location,
             price: totalPrice,
+            to: value.endDate,
+            from: value.startDate,
+            // guest: roomData?.total_guest,
+            title: roomData.title,
+            roomId: roomData._id,
+            image: roomData.image,
 
       })
+
+      const handleSelect = ranges => {
+            setValue({ ...value })
+      }
+
+      const closeModal = () => {
+            setIsOpen(false)
+      }
+
+      const modalHandler = () => {
+            addBooking(bookingInfo)
+                  .then(data => {
+                        console.log(data);
+                        updateStatus(roomData._id, true)
+                              .then(data => {
+                                    console.log(data);
+                                    toast.success("Booked Successfully")
+                                    closeModal()
+                              })
+                              .catch(err => {
+                                    console.log(err.message);
+                              })
+
+                  }).catch(err => {
+                        console.log(err.message);
+                  })
+
+            console.log(bookingInfo);
+      }
+
 
       return (
             <div className='bg-white border-[1px] border-neutral-300 overflow-hidden rounded-md w-full'>
@@ -35,7 +79,7 @@ const RoomReservation = ({ roomData }) => {
                   <hr />
                   <div className='flex justify-center'>
                         <div>
-                              <DatePicker></DatePicker>
+                              <DatePicker handleSelect={handleSelect} value={value}></DatePicker>
                         </div>
 
                   </div>
@@ -44,7 +88,7 @@ const RoomReservation = ({ roomData }) => {
                   <div className='p-4'>
                         <Button
                               onClick={() => setIsOpen(true)}
-                              disabled={roomData.host.email === user.email}
+                              disabled={roomData.host.email === user.email || roomData._id == bookingInfo.roomId || roomData.booked}
                               label={`Reserve`}>
                         </Button></div>
                   <hr />
@@ -53,7 +97,11 @@ const RoomReservation = ({ roomData }) => {
                         <div>${totalPrice}</div>
 
                   </div>
-                  <BookingModal isOpen={isOpen} />
+                  <BookingModal
+                        modalHandler={modalHandler}
+                        closeModal={closeModal}
+                        bookingInfo={bookingInfo}
+                        isOpen={isOpen} />
             </div>
       );
 };

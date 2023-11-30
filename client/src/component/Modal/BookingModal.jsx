@@ -48,14 +48,14 @@ const BookingModal = ({ modalHandler, closeModal, isOpen, bookingInfo }) => {
                                                 </div>
                                                 <div className='mt-2'>
                                                       <p className='text-sm text-gray-500'>
-                                                            Guest: {bookingInfo?.guest.displayName}
+                                                            Guest-Name: {bookingInfo?.guest.name}
                                                       </p>
                                                 </div>
                                                 <div className='mt-2'>
-                                                      {/* <p className='text-sm text-gray-500'>
+                                                      <p className='text-sm text-gray-500'>
                                                             From: {format(new Date(bookingInfo?.from), 'PP')} - To:{' '}
                                                             {format(new Date(bookingInfo.to), 'PP')}
-                                                      </p> */}
+                                                      </p>
                                                 </div>
                                                 <div className='mt-2'>
                                                       <p className='text-sm text-gray-500'>
