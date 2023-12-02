@@ -3,7 +3,8 @@ const app = express()
 const cors = require('cors')
 require('dotenv').config()
 const port = process.env.PORT || 12000
-
+// This is your test secret API key.
+const stripe = require("stripe")(process.env.PAYMENT_SECRET_KEY);
 // middleware
 const corsOptions = {
       origin: '*',
@@ -31,7 +32,22 @@ async function run() {
             const roomsCollection = client.db('paradiseDb').collection('rooms')
             const bookingsCollection = client.db('paradiseDb').collection('bookings')
 
+            //Genarate client secret for stripe payment
 
+            app.post('/create-payment-intent', async (req, res) => {
+                  const { price } = req.body
+                  console.log(price);
+                  if (price) {
+                        //convert dollar into cent
+                        const amount = parseFloat(price) * 100
+                        const paymentIntent = await stripe.paymentIntents.create({
+                              amount: amount,
+                              currency: 'usd',
+                              payment_method_types: ['card'],
+                        })
+                        res.send({ clientSecret: paymentIntent.client_secret })
+                  }
+            })
             //save user to database
 
             app.put("/users/:email", async (req, res) => {
@@ -125,6 +141,15 @@ async function run() {
 
                   const result = await bookingsCollection.find(query).toArray()
                   res.send(result)
+            })
+
+            //Delete booking from database
+
+            app.delete('/bookings/:id', async (req, res) => {
+                  const id = req.params.id
+                  const query = { _id: new ObjectId(id) }
+                  const remove = await bookingsCollection.deleteOne(query)
+                  res.send(remove);
             })
 
 
