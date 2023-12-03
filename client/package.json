@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
+    "@stripe/react-stripe-js": "^2.4.0",
+    "@stripe/stripe-js": "^2.2.0",
     "date-fns": "^2.30.0",
     "firebase": "^9.22.0",
     "query-string": "^8.1.0",

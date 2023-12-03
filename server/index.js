@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 require('dotenv').config()
+const nodemailer = require("nodemailer")
 const port = process.env.PORT || 12000
 // This is your test secret API key.
 const stripe = require("stripe")(process.env.PAYMENT_SECRET_KEY);
@@ -25,6 +26,35 @@ const client = new MongoClient(uri, {
             deprecationErrors: true,
       }
 });
+
+//send mail function
+
+const sendMail = (emailData, emailAddress) => {
+      const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                  user: process.env.EMAIL,
+                  pass: process.env.PASS,
+            }
+      });
+
+      const mailOptions = {
+            from: process.env.EMAIL,
+            to: emailAddress,
+            subject: emailData.subject,
+            html: `<p>${emailData?.message}</p>`,
+      };
+      transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                  console.log(error);
+            } else {
+                  console.log('Email sent: ' + info.response);
+                  // do something useful
+            }
+      });
+
+
+}
 
 async function run() {
       try {
@@ -125,6 +155,22 @@ async function run() {
             app.post('/bookings', async (req, res) => {
                   const booking = req.body;
                   const result = await bookingsCollection.insertOne(booking)
+
+                  //send confirmation email to guest email account
+                  sendMail({
+                        subject: "Booking Successful with payment !!",
+                        message: `Booking Id: ${result?.insertedId}, TransationId:${booking.transactionId}`,
+                  },
+                        booking?.guest?.email
+                  )
+                  //send confirmation email to host email account
+
+                  sendMail({
+                        subject: "Booking Successful with payment !!",
+                        message: `Booking Id: ${result?.insertedId}, TransationId:${booking.transactionId}`,
+                  },
+                        booking?.host
+                  )
                   res.send(result)
             })
 
@@ -155,10 +201,10 @@ async function run() {
 
 
             // Send a ping to confirm a successful connection
-            await client.db('admin').command({ ping: 1 })
-            console.log(
-                  'Pinged your deployment. You successfully connected to MongoDB!'
-            )
+            // await client.db('admin').command({ ping: 1 })
+            // console.log(
+            //       'Pinged your deployment. You successfully connected to MongoDB!'
+            // )
       } finally {
             // Ensures that the client will close when you finish/error
             // await client.close();

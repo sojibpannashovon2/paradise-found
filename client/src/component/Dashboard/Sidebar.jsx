@@ -5,11 +5,13 @@ import Logo from '../Shared/Navbar/Logo'
 import { GrLogout } from 'react-icons/gr'
 import { FcHome, FcSettings } from 'react-icons/fc'
 import { AiOutlineBars } from 'react-icons/ai'
-import { BsBookFill, BsFillHouseAddFill } from 'react-icons/bs'
+// import { BsBookFill, BsFillHouseAddFill } from 'react-icons/bs'
+import GuestMenu from './GuestMenu'
+import HostMenu from './HostMenu'
 const Sidebar = () => {
       const navigate = useNavigate()
       const [toggle, setToggle] = useState(false)
-      const { user, logOut } = useContext(AuthContext)
+      const { user, logOut, role } = useContext(AuthContext)
 
       const [isActive, setActive] = useState('false')
       const toggleHandler = event => {
@@ -51,10 +53,10 @@ const Sidebar = () => {
                                     <div className='w-full hidden md:flex py-2 justify-center items-center bg-rose-100 mx-auto'>
                                           <Logo />
                                     </div>
-                                    <div className='flex flex-col items-center mt-6 -mx-2'>
+                                    <div className='flex flex-col items-center mt-4 -mx-2'>
                                           <Link to='/dashboard'>
                                                 <img
-                                                      className='object-cover w-24 h-24 mx-2 rounded-full'
+                                                      className='object-cover w-16 h-16 mx-2 rounded-full'
                                                       src={user?.photoURL}
                                                       alt='avatar'
                                                       referrerPolicy='no-referrer'
@@ -74,12 +76,14 @@ const Sidebar = () => {
                               </div>
 
                               {/* Nav Items */}
-                              <div className='flex flex-col justify-between flex-1 mt-6'>
+                              <div
+                                    className=''>
                                     <nav>
                                           <>
-                                                <label
+                                                {role && role === 'host' ? <label
                                                       htmlFor='Toggle3'
-                                                      className='inline-flex w-full justify-center items-center px-2 rounded-md cursor-pointer text-gray-800'
+                                                      className=' w-full  rounded-md cursor-pointer text-gray-800
+                                                      flex flex-col justify-between flex-1 mt-6'
                                                 >
                                                       <input
                                                             onChange={toggleHandler}
@@ -87,37 +91,19 @@ const Sidebar = () => {
                                                             type='checkbox'
                                                             className='hidden peer'
                                                       />
-                                                      <span className='px-4 py-1 rounded-l-md bg-rose-400 peer-checked:bg-gray-300'>
-                                                            Guest
-                                                      </span>
-                                                      <span className='px-4 py-1 rounded-r-md bg-gray-300 peer-checked:bg-rose-400'>
-                                                            Host
-                                                      </span>
-                                                </label>
-                                                {/* Menu Links */}
-                                                <NavLink
-                                                      to='/dashboard/add-room'
-                                                      className={({ isActive }) =>
-                                                            `flex items-center px-4 py-2 mt-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
-                                                            }`
-                                                      }
-                                                >
-                                                      <BsFillHouseAddFill className='w-5 h-5' />
-
-                                                      <span className='mx-4 font-medium'>Add Room</span>
-                                                </NavLink>
-                                                <NavLink
-                                                      to='/dashboard/my-bookings'
-                                                      className={({ isActive }) =>
-                                                            `flex items-center px-4 py-2 mt-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
-                                                            }`
-                                                      }
-                                                >
-                                                      {/* <BsFillHouseAddFill  /> */}
-                                                      <BsBookFill className='w-5 h-5' />
-
-                                                      <span className='mx-4 font-medium'>My booking</span>
-                                                </NavLink>
+                                                      <div className='flex justify-center'>
+                                                            <div>
+                                                                  <span className='px-4 py-1 rounded-l-md bg-rose-400 peer-checked:bg-gray-300'>
+                                                                        Guest
+                                                                  </span>
+                                                                  <span className='px-4 py-1 rounded-r-md bg-gray-300 peer-checked:bg-rose-400'>
+                                                                        Host
+                                                                  </span>
+                                                            </div>
+                                                      </div>
+                                                      {toggle ? <HostMenu /> : <GuestMenu />}
+                                                </label> :
+                                                      <GuestMenu />}
                                           </>
                                     </nav>
                               </div>
@@ -139,7 +125,7 @@ const Sidebar = () => {
 
                               <button
                                     onClick={handleLogOut}
-                                    className='flex w-full items-center px-4 py-2 mt-5 text-gray-600 hover:bg-gray-300   hover:text-gray-700 transition-colors duration-300 transform'
+                                    className='flex w-full items-center px-4 py-2 mt-2 text-gray-600 hover:bg-gray-300   hover:text-gray-700 transition-colors duration-300 transform'
                               >
                                     <GrLogout className='w-5 h-5' />
 

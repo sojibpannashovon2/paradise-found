@@ -1,4 +1,4 @@
-
+import { useNavigate } from "react-router-dom"
 import DatePicker from './DatePicker';
 import Button from '../../component/Button/Button';
 import { useContext } from 'react';
@@ -12,6 +12,7 @@ const RoomReservation = ({ roomData }) => {
 
       const { user, role, setRole } = useContext(AuthContext);
       const [isOpen, setIsOpen] = useState(false);
+      const navigate = useNavigate()
       const totalPrice = parseFloat(
             formatDistance(
                   new Date(roomData.to),
@@ -48,26 +49,29 @@ const RoomReservation = ({ roomData }) => {
             setIsOpen(false)
       }
 
-      const modalHandler = () => {
-            addBooking(bookingInfo)
-                  .then(data => {
-                        console.log(data);
-                        updateStatus(roomData._id, true)
-                              .then(data => {
-                                    console.log(data);
-                                    toast.success("Booked Successfully")
-                                    closeModal()
-                              })
-                              .catch(err => {
-                                    console.log(err.message);
-                              })
+      // const modalHandler = () => {
+      //       addBooking(bookingInfo)
+      //             .then(data => {
+      //                   console.log(data);
+      //                   updateStatus(roomData._id, true)
+      //                         .then(data => {
+      //                               console.log(data);
+      //                               toast.success("Booked Successfully")
+      //                               closeModal()
+      //                               navigate(`/dashboard/my-bookings`)
 
-                  }).catch(err => {
-                        console.log(err.message);
-                  })
 
-            console.log(bookingInfo);
-      }
+      //                         })
+      //                         .catch(err => {
+      //                               console.log(err.message);
+      //                         })
+
+      //             }).catch(err => {
+      //                   console.log(err.message);
+      //             })
+
+      //       console.log(bookingInfo);
+      // }
 
 
       return (
@@ -85,12 +89,13 @@ const RoomReservation = ({ roomData }) => {
                   </div>
 
                   <hr />
-                  <div className='p-4'>
-                        <Button
-                              onClick={() => setIsOpen(true)}
-                              disabled={roomData.host.email === user.email || roomData._id == bookingInfo.roomId || roomData.booked}
-                              label={`Reserve`}>
-                        </Button></div>
+
+                  <Button
+                        className='p-4'
+                        onClick={() => setIsOpen(true)}
+                        disabled={roomData.host.email === user.email || roomData.booked}
+                        label={`Reserve`}>
+                  </Button>
                   <hr />
                   <div className='flex flex-row items-center justify-between p-4 font-bold text-lg'>
                         <div>Total</div>
@@ -98,7 +103,7 @@ const RoomReservation = ({ roomData }) => {
 
                   </div>
                   <BookingModal
-                        modalHandler={modalHandler}
+                        // modalHandler={modalHandler}
                         closeModal={closeModal}
                         bookingInfo={bookingInfo}
                         isOpen={isOpen} />

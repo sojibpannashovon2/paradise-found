@@ -371,3 +371,12 @@ Data Loader(React Spinner)
                 };
 
                 export default CategoryBox;
+
+
+#Nodemailer Component
+
+Nodemailer blog -> Blog Link
+https://miracleio.me/snippets/use-gmail-with-nodemailer/
+
+Email Template Guide => Blog Link
+https://medium.com/jsblend/how-to-send-emails-with-templates-using-nodejs-176b72c1406d
