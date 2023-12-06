@@ -122,6 +122,15 @@ async function run() {
                   res.send(result)
             })
 
+            //Get Host spechific Rooms data
+
+            app.get('/rooms/:email', async (req, res) => {
+                  const email = req.params.email;
+                  const query = { "host.email": email }
+                  const result = await roomsCollection.find(query).toArray()
+                  res.send(result)
+            })
+
             //Get A Single Room data
 
             app.get('/rooms/:id', async (req, res) => {
@@ -131,6 +140,18 @@ async function run() {
                   res.send(result)
                   // console.log(result);
             })
+
+
+            //Delete room data from host database
+
+            app.delete('/rooms/:id', async (req, res) => {
+                  const id = req.params.id
+                  const query = { _id: new ObjectId(id) }
+                  const remove = await roomsCollection.deleteOne(query)
+                  res.send(remove);
+            })
+
+
 
 
             // updated room booking status
