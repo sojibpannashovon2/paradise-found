@@ -21,6 +21,25 @@ export const getAllRooms = async () => {
       const data = await response.json()
       return data;
 }
+// Get filtered  rooms for host
+
+export const getHostsRooms = async (email) => {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/rooms/${email}`)
+      const data = await response.json()
+      return data;
+}
+// delete host rooms data
+
+export const deleteHostsRooms = async (email) => {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/rooms/${email}`, {
+            method: "DELETE",
+            headers: {
+                  "content-type": "application/json"
+            }
+      })
+      const data = await response.json()
+      return data;
+}
 
 // Get A Single rooms data
 

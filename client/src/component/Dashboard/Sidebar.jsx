@@ -91,7 +91,7 @@ const Sidebar = () => {
                                                             type='checkbox'
                                                             className='hidden peer'
                                                       />
-                                                      <div className='flex justify-center'>
+                                                      <div className=''>
                                                             <div>
                                                                   <span className='px-4 py-1 rounded-l-md bg-rose-400 peer-checked:bg-gray-300'>
                                                                         Guest
