@@ -77,13 +77,14 @@ const Sidebar = () => {
 
                               {/* Nav Items */}
                               <div
-                                    className=''>
+                                    className='flex flex-col justify-between flex-1 mt-6'>
                                     <nav>
-                                          <>
-                                                {role && role === 'host' ? <label
+                                          
+                                          {role && role === 'host' ? <>
+                                          <label
                                                       htmlFor='Toggle3'
-                                                      className=' w-full  rounded-md cursor-pointer text-gray-800
-                                                      flex flex-col justify-between flex-1 mt-6'
+                                                      className='flex-col w-full  rounded-md cursor-pointer text-gray-800
+                                                     justify-center  mt-6'
                                                 >
                                                       <input
                                                             onChange={toggleHandler}
@@ -91,20 +92,21 @@ const Sidebar = () => {
                                                             type='checkbox'
                                                             className='hidden peer'
                                                       />
-                                                      <div className=''>
-                                                            <div>
-                                                                  <span className='px-4 py-1 rounded-l-md bg-rose-400 peer-checked:bg-gray-300'>
+                                                      
+                                                          
+                                                            <span className='px-4 ml-12 py-1 rounded-l-md bg-rose-400 peer-checked:bg-gray-300'>
                                                                         Guest
                                                                   </span>
                                                                   <span className='px-4 py-1 rounded-r-md bg-gray-300 peer-checked:bg-rose-400'>
                                                                         Host
-                                                                  </span>
-                                                            </div>
-                                                      </div>
-                                                      {toggle ? <HostMenu /> : <GuestMenu />}
-                                                </label> :
-                                                      <GuestMenu />}
-                                          </>
+                                                            </span>
+                                                          
+                                                            {toggle ? <HostMenu /> : <GuestMenu />}
+                                                           
+                                                      
+                                                      
+                                                </label> </> :<GuestMenu />}
+                                          
                                     </nav>
                               </div>
                         </div>

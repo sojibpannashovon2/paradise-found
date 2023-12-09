@@ -8,7 +8,7 @@ const MyListings = () => {
   const [hostRoomData, setHostRoomData] = useState([])
 
   const fetchHostRooms = () => {
-    getHostsRooms(user.email)
+    getHostsRooms(user?.email)
       .then(data => {
         console.log(data);
         setHostRoomData(data)

@@ -23,7 +23,7 @@ const RoomReservation = ({ roomData }) => {
 
       const [value, setValue] = useState({
             startDate: new Date(roomData?.from),
-            endDate: new Date(roomData?.from),
+            endDate: new Date(roomData?.to),
             key: 'selection'
       })
 

@@ -5,10 +5,12 @@ import { AuthContext } from '../../providers/AuthProvider';
 
 import toast from 'react-hot-toast';
 import { addRoom } from '../../Api/rooms';
+import { useNavigate } from 'react-router-dom';
 
 const AddRoom = () => {
 
       const [loading, setLoading] = useState(false)
+      const navigate = useNavigate()
       const [uploadButtonText, setUploadButtonText] = useState(`Upload Image`)
       const [dates, setDates] = useState({
             startDate: new Date(),
@@ -69,6 +71,7 @@ const AddRoom = () => {
                               .then(data => {
                                     console.log(data)
                                     toast.success(`Room data is added successfully !!!`)
+                                    navigate(`/dashboard/my-listings`)
                               })
                               .catch(err => {
                                     console.log(err.message);
