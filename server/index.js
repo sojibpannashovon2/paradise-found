@@ -124,8 +124,11 @@ async function run() {
 
             //Get Host spechific Rooms data
 
-            app.get('/rooms/:email', async (req, res) => {
+            app.get('/rooms', async (req, res) => {
                   const email = req.params.email;
+                  if (!email) {
+                        res.send([])
+                  }
                   const query = { "host.email": email }
                   const result = await roomsCollection.find(query).toArray()
                   res.send(result)
