@@ -20,7 +20,9 @@ export const saveUser = (user) => {
 
 
 export const becomeHost = (email) => {
-
+      const currentUser = {
+      role:`host`
+}
       return fetch(`${import.meta.env.VITE_API_URL}/users/${email}`, {
             method: "PUT",
             headers: {
