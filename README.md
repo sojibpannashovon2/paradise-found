@@ -1,33 +1,30 @@
-"# paradise-found" 
+"# paradise-found"
 
 ![image](https://github.com/sojibpannashovon2/paradise-found/assets/108423803/a35baa6a-d40c-406e-b5ec-a14ed14c25b0)
 
 #For Server--Initial package
 
-
 {
-  "name": "aircnc-server",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "mongodb": "^5.5.0"
-  }
+"name": "aircnc-server",
+"version": "1.0.0",
+"description": "",
+"main": "index.js",
+"scripts": {
+"start": "node index.js",
+"dev": "nodemon index.js"
+},
+"keywords": [],
+"author": "",
+"license": "ISC",
+"dependencies": {
+"cors": "^2.8.5",
+"dotenv": "^16.0.3",
+"express": "^4.18.2",
+"mongodb": "^5.5.0"
+}
 }
 
-
 #For Inital index.js given requirment
-
 
 const express = require('express')
 const app = express()
@@ -37,9 +34,9 @@ const port = process.env.PORT || 7000
 
 // middleware
 const corsOptions = {
-      origin: '*',
-      credentials: true,
-      optionSuccessStatus: 200,
+origin: '\*',
+credentials: true,
+optionSuccessStatus: 200,
 }
 app.use(cors(corsOptions))
 app.use(express.json())
@@ -48,18 +45,18 @@ const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.mq0mae1.mongodb.net/?retryWrites=true&w=majority`
 
 const client = new MongoClient(uri, {
-      serverApi: {
-            version: ServerApiVersion.v1,
-            strict: true,
-            deprecationErrors: true,
-      },
+serverApi: {
+version: ServerApiVersion.v1,
+strict: true,
+deprecationErrors: true,
+},
 })
 
 async function run() {
-      try {
-            const usersCollection = client.db('aircncDb').collection('users')
-            const roomsCollection = client.db('aircncDb').collection('rooms')
-            const bookingsCollection = client.db('aircncDb').collection('bookings')
+try {
+const usersCollection = client.db('aircncDb').collection('users')
+const roomsCollection = client.db('aircncDb').collection('rooms')
+const bookingsCollection = client.db('aircncDb').collection('bookings')
 
             // Send a ping to confirm a successful connection
             await client.db('admin').command({ ping: 1 })
@@ -70,17 +67,17 @@ async function run() {
             // Ensures that the client will close when you finish/error
             // await client.close();
       }
+
 }
 run().catch(console.dir)
 
 app.get('/', (req, res) => {
-      res.send('Paradise Found Server is running..')
+res.send('Paradise Found Server is running..')
 })
 
 app.listen(port, () => {
-      console.log(`Paradise Found is running on port ${port}`)
+console.log(`Paradise Found is running on port ${port}`)
 })
-
 
 #For Sidebar code
 
@@ -92,31 +89,31 @@ import { GrLogout } from 'react-icons/gr'
 import { FcSettings } from 'react-icons/fc'
 import { AiOutlineBars } from 'react-icons/ai'
 const Sidebar = () => {
-  const navigate = useNavigate()
-  const [toggle, setToggle] = useState(false)
-  const { user, logOut } = useContext(AuthContext)
+const navigate = useNavigate()
+const [toggle, setToggle] = useState(false)
+const { user, logOut } = useContext(AuthContext)
 
-  const [isActive, setActive] = useState('false')
-  const toggleHandler = event => {
-    setToggle(event.target.checked)
-  }
-  // Sidebar Responsive Handler
-  const handleToggle = () => {
-    setActive(!isActive)
-  }
-  const handleLogOut = () => {
-    logOut()
-    navigate('/')
-  }
-  return (
-    <>
-      {/* Small Screen Navbar */}
-      <div className='bg-gray-100 text-gray-800 flex justify-between md:hidden'>
-        <div>
-          <div className='block cursor-pointer p-4 font-bold'>
-            <Logo />
-          </div>
-        </div>
+const [isActive, setActive] = useState('false')
+const toggleHandler = event => {
+setToggle(event.target.checked)
+}
+// Sidebar Responsive Handler
+const handleToggle = () => {
+setActive(!isActive)
+}
+const handleLogOut = () => {
+logOut()
+navigate('/')
+}
+return (
+<>
+{/_ Small Screen Navbar _/}
+<div className='bg-gray-100 text-gray-800 flex justify-between md:hidden'>
+<div>
+<div className='block cursor-pointer p-4 font-bold'>
+<Logo />
+</div>
+</div>
 
         <button
           onClick={handleToggle}
@@ -223,27 +220,18 @@ const Sidebar = () => {
         </div>
       </div>
     </>
-  )
+
+)
 }
 
 export default Sidebar
 
+----------------------------------- New Techonogy Used -------------------------------------
 
-
-
-
-
-
------------------------------------   New Techonogy Used -------------------------------------
-
-
-
-
-
-1. React-date-range
+1.  React-date-range
 
     Installation
-            npm install --save react-date-range
+    npm install --save react-date-range
 
     You need to import skeleton and theme styles first.
 
@@ -262,9 +250,8 @@ export default Sidebar
                             onChange={this.handleSelect}
                           />
                         )
-       
 
-2. React-fns
+2.  React-fns
 
     This plugin expects react and date-fns as peerDependencies, It means that you need to install them in your project folder.
 
@@ -283,7 +270,7 @@ export default Sidebar
                 ).split(' ')[0]
                 ) * roomData.price;
 
-3. Spinner, React-spinner(Data loader) From react-icons site
+3.  Spinner, React-spinner(Data loader) From react-icons site
 
     Spinner
 
@@ -303,34 +290,29 @@ export default Sidebar
                                     </button>
                               </div>
 
-
 Data Loader(React Spinner)
 
-   Link: https://www.davidhu.io/react-spinners/
-
-
-   
+Link: https://www.davidhu.io/react-spinners/
 
             <div
                               className='
                   h-[70vh]
-                  flex 
-                  flex-col 
-                  justify-center 
-                  items-center 
+                  flex
+                  flex-col
+                  justify-center
+                  items-center
                 '
                         >
                               <PacmanLoader size={50} color='red' />
             </div>
 
-
-4. Query-string
+4.  Query-string
 
            import qs from "query-string"
 
 
 
-       
+
                 import { useNavigate, useSearchParams } from 'react-router-dom';
                 import qs from "query-string"
                 const CategoryBox = ({ label, icon: Icon }) => {
@@ -372,7 +354,6 @@ Data Loader(React Spinner)
 
                 export default CategoryBox;
 
-
 #Nodemailer Component
 
 Nodemailer blog -> Blog Link
@@ -380,3 +361,5 @@ https://miracleio.me/snippets/use-gmail-with-nodemailer/
 
 Email Template Guide => Blog Link
 https://medium.com/jsblend/how-to-send-emails-with-templates-using-nodejs-176b72c1406d
+
+new branch Added.
