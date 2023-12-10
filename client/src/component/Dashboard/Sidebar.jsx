@@ -50,7 +50,7 @@ const Sidebar = () => {
                         <div>
                               {/* Branding & Profile Info */}
                               <div>
-                                    <div className='w-full hidden md:flex py-2 justify-center items-center bg-rose-100 mx-auto'>
+                                    <div className='w-full hidden md:flex py-2 justify-center items-center bg-sky-200 mx-auto'>
                                           <Logo />
                                     </div>
                                     <div className='flex flex-col items-center mt-4 -mx-2'>
@@ -94,10 +94,10 @@ const Sidebar = () => {
                                                       />
                                                       
                                                           
-                                                            <span className='px-4 ml-12 py-1 rounded-l-md bg-rose-400 peer-checked:bg-gray-300'>
+                                                            <span className='px-4 ml-12 py-1 rounded-l-md bg-sky-400 peer-checked:bg-gray-300'>
                                                                         Guest
                                                                   </span>
-                                                                  <span className='px-4 py-1 rounded-r-md bg-gray-300 peer-checked:bg-rose-400'>
+                                                                  <span className='px-4 py-1 rounded-r-md bg-gray-300 peer-checked:bg-sky-400'>
                                                                         Host
                                                             </span>
                                                           

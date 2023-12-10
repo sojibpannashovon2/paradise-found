@@ -1,7 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 
-const DeleteModal = ({ modalHandler, closeModal, isOpen, id }) => {
+const DeleteModal = ({ deleteHostRoomData, closeModal, isOpen, id }) => {
       return (
             <Transition appear show={isOpen} as={Fragment}>
                   <Dialog as='div' className='relative z-10' onClose={closeModal}>
@@ -45,7 +45,7 @@ const DeleteModal = ({ modalHandler, closeModal, isOpen, id }) => {
                                                       <button
                                                             type='button'
                                                             className='inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2'
-                                                            onClick={() => modalHandler(id)}
+                                                            onClick={() => deleteHostRoomData(id)}
                                                       >
                                                             Yes
                                                       </button>
