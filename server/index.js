@@ -1,12 +1,14 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
+const morgan = require('morgan')
 require('dotenv').config()
 const nodemailer = require("nodemailer")
 const port = process.env.PORT || 12000
 // This is your test secret API key.
 const stripe = require("stripe")(process.env.PAYMENT_SECRET_KEY);
 // middleware
+
 const corsOptions = {
       origin: '*',
       credentials: true,
@@ -14,7 +16,7 @@ const corsOptions = {
 }
 app.use(cors(corsOptions))
 app.use(express.json())
-
+app.use(morgan('dev'))
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.yaanftr.mongodb.net/?retryWrites=true&w=majority`;
@@ -170,7 +172,7 @@ async function run() {
                   }
                   const update = await roomsCollection.updateOne(query, updateDoc)
                   res.send(update)
-                  console.log(update);
+                
             })
 
 
@@ -198,7 +200,7 @@ async function run() {
                   res.send(result)
             })
 
-            //Get Rooms data
+            //Get bookings data
 
             app.get('/bookings', async (req, res) => {
 
@@ -208,6 +210,20 @@ async function run() {
                         res.send([])
                   }
                   const query = { 'guest.email': email }
+
+                  const result = await bookingsCollection.find(query).toArray()
+                  res.send(result)
+            })
+            //Get bookings data for host
+
+            app.get('/bookings/host', async (req, res) => {
+
+                  const email = req.query.email
+
+                  if (!email) {
+                        res.send([])
+                  }
+                  const query = { host: email }
 
                   const result = await bookingsCollection.find(query).toArray()
                   res.send(result)
