@@ -126,19 +126,19 @@ async function run() {
 
             //Get Host spechific Rooms data
 
-            app.get('/rooms', async (req, res) => {
+            app.get('/rooms/:email', async (req, res) => {
                   const email = req.params.email;
                   if (!email) {
                         res.send([])
                   }
-                  const query = { "host.email": email }
+                  const query = { 'host.email': email }
                   const result = await roomsCollection.find(query).toArray()
                   res.send(result)
             })
 
             //Get A Single Room data
 
-            app.get('/rooms/:id', async (req, res) => {
+            app.get('/room/:id', async (req, res) => {
                   const roomId = req.params.id
                   const query = { _id: new ObjectId(roomId) }
                   const result = await roomsCollection.findOne(query)
@@ -149,7 +149,7 @@ async function run() {
 
             //Delete room data from host database
 
-            app.delete('/rooms/:id', async (req, res) => {
+            app.delete('/room/:id', async (req, res) => {
                   const id = req.params.id
                   const query = { _id: new ObjectId(id) }
                   const remove = await roomsCollection.deleteOne(query)

@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { BsFingerprint } from 'react-icons/bs'
 import { GrUserAdmin } from 'react-icons/gr'
 import { useContext, useState } from 'react'
@@ -11,6 +11,7 @@ import HostModal from '../Modal/HostRequestModal'
 const GuestMenu = () => {
       const { user, role, setRole } = useContext(AuthContext)
       const [isOpen, setIsOpen] = useState(false)
+      const navigate = useNavigate();
       const closeModal = () => {
             setIsOpen(false)
       }
@@ -20,6 +21,7 @@ const GuestMenu = () => {
                         console.log(data)
                         toast.success(`You Are Admin Now !!, You can post Now`)
                         setRole(`host`)
+                        navigate(`/dashboard/add-room`)
                         closeModal();
                         
                   }).catch(err => {
