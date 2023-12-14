@@ -1,4 +1,4 @@
-import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
+import { AiFillHeart, AiOutlineHeart,AiFillStar,AiOutlineStar } from 'react-icons/ai'
 
 const HeartButton = () => {
       return (
@@ -10,7 +10,7 @@ const HeartButton = () => {
         cursor-pointer
       '
             >
-                  <AiOutlineHeart
+                  <AiOutlineStar
                         size={28}
                         className='
           fill-white
@@ -19,7 +19,7 @@ const HeartButton = () => {
           -right-[2px]
         '
                   />
-                  <AiFillHeart
+                  <AiFillStar
                         size={24}
                         className='fill-neutral-500/70 hover:fill-rose-500'
                   />

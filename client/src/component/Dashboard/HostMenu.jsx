@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { BsFillHouseAddFill } from 'react-icons/bs'
 import { MdHomeWork, MdOutlineManageHistory } from 'react-icons/md'
 const HostMenu = () => {
@@ -35,7 +35,7 @@ const HostMenu = () => {
                   >
                         <MdOutlineManageHistory className='w-5 h-5' />
 
-                        <span className='mx-4 font-medium'> Manage Bookings</span>
+                        <Link to={`/dashboard/manage-bookings`} className='mx-4 font-medium'> Manage Bookings</Link >
                   </NavLink>
             </>
       )
