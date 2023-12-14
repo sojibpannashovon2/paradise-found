@@ -23,8 +23,10 @@ const MenuDropdown = () => {
                         toast.success(`Now you are a Host, post a room`)
                         setRole(`host`)
                         closeModal();
+                  }).catch(err => {
+                        console.log(err.message);
                   })
-            console.log(`Modal Clicked`);
+
       }
 
       const closeModal = () => {

@@ -31,7 +31,7 @@ export const getHostsRooms = async (email) => {
 // delete host rooms data
 
 export const deleteHostsRooms = async (email) => {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/rooms/${email}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/rooms?email=${email}`, {
             method: "DELETE",
             headers: {
                   "content-type": "application/json"

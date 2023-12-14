@@ -15,26 +15,26 @@ const RoomReservation = ({ roomData }) => {
       const navigate = useNavigate()
       const totalPrice = parseFloat(
             formatDistance(
-                  new Date(roomData.to),
-                  new Date(roomData.from)
+                  new Date(roomData?.to),
+                  new Date(roomData?.from)
             ).split(' ')[0]
       ) * roomData.price;
 
 
       const [value, setValue] = useState({
             startDate: new Date(roomData?.from),
-            endDate: new Date(roomData?.from),
+            endDate: new Date(roomData?.to),
             key: 'selection'
       })
 
       const [bookingInfo, setBookingInfo] = useState({
             guest: { name: user?.displayName, email: user?.email, image: user?.photoURL },
-            host: roomData?.host.email,
+            host: roomData?.host?.email,
             location: roomData?.location,
             price: totalPrice,
             to: value.endDate,
             from: value.startDate,
-            // guest: roomData?.total_guest,
+            // guest: roomData.total_guest,
             title: roomData.title,
             roomId: roomData._id,
             image: roomData.image,
@@ -93,7 +93,7 @@ const RoomReservation = ({ roomData }) => {
                   <Button
                         className='p-4'
                         onClick={() => setIsOpen(true)}
-                        disabled={roomData.host.email === user.email || roomData.booked}
+                        disabled={roomData?.host.email === user.email || roomData?.booked}
                         label={`Reserve`}>
                   </Button>
                   <hr />
