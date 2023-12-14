@@ -10,8 +10,9 @@ import { useNavigate } from 'react-router-dom';
 const AddRoom = () => {
 
       const [loading, setLoading] = useState(false)
-      const [uploadButtonText, setUploadButtonText] = useState(`Upload Image`)
       const navigate = useNavigate()
+      const [uploadButtonText, setUploadButtonText] = useState(`Upload Image`)
+
       const [dates, setDates] = useState({
             startDate: new Date(),
             endDate: new Date(),

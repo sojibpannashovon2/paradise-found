@@ -1,10 +1,19 @@
 import { format } from 'date-fns'
 import { deleteHostsRooms } from '../../Api/rooms'
 import toast from 'react-hot-toast'
+import { useState } from 'react'
+import DeleteModal from '../Modal/DeleteModal'
 
 const RoomDataRow = ({ room, fetchHostRooms }) => {
+      const [isOpen, setIsOpen] = useState(false);
 
-      const deleteHostRoomData = () => {
+      const openModal = () => {
+            setIsOpen(true)
+      }
+      const closeModal = () => {
+            setIsOpen(false)
+      }
+      const modalHandler = () => {
             deleteHostsRooms(room._id)
                   .then(data => {
                         console.log(data);
@@ -13,6 +22,7 @@ const RoomDataRow = ({ room, fetchHostRooms }) => {
                   }).catch(err => {
                         console.log(err.message);
                   })
+            closeModal()
       }
       return (
             <tr>
@@ -49,16 +59,17 @@ const RoomDataRow = ({ room, fetchHostRooms }) => {
                         </p>
                   </td>
                   <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-                        <button onClick={deleteHostRoomData} className='relative cursor-pointer inline-block px-3 py-1 font-semibold text-green-900 leading-tight'>
+                        <span onClick={openModal} className='relative cursor-pointer inline-block px-3 py-1 font-semibold text-green-900 leading-tight hover:shadow-2xl hover:bg-red-600 hover:p-3'>
                               <span
                                     aria-hidden='true'
                                     className='absolute inset-0 bg-red-200 opacity-50 rounded-full'
                               ></span>
                               <span className='relative'>Delete</span>
-                        </button>
+                        </span>
+                        <DeleteModal isOpen={isOpen} closeModal={closeModal} modalHandler={modalHandler} id={room?._id} />
                   </td>
-                  <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-                        <span className='relative cursor-pointer inline-block px-3 py-1 font-semibold text-green-900 leading-tight'>
+                  <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm '>
+                        <span className='relative cursor-pointer inline-block px-3 py-1 font-semibold text-green-900 leading-tight hover:shadow-2xl hover:bg-green-600 hover:p-3' >
                               <span
                                     aria-hidden='true'
                                     className='absolute inset-0 bg-green-200 opacity-50 rounded-full'

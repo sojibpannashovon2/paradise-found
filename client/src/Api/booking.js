@@ -33,10 +33,17 @@ export const updateStatus = async (id, status) => {
 
 }
 
-// Get all booking information
+// Get all booking information(user & host can see the information)
 
 export const getAllBookings = async (email) => {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/bookings?email=${email}`)
+      const data = await response.json()
+      return data;
+}
+// Get all booking information( host can see the information)
+
+export const getHostBookings = async (email) => {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/bookings/host?email=${email}`)
       const data = await response.json()
       return data;
 }

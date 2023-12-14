@@ -1,7 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 
-const DeleteModal = ({ modalHandler, closeModal, isOpen, id }) => {
+const DeleteModal = ({modalHandler, closeModal, isOpen, id }) => {
       return (
             <Transition appear show={isOpen} as={Fragment}>
                   <Dialog as='div' className='relative z-10' onClose={closeModal}>

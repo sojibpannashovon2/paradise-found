@@ -20,7 +20,7 @@ const AddRoomForm = ({
                                                 Location
                                           </label>
                                           <input
-                                                className='w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md '
+                                                className='w-full px-4 py-3 text-gray-800 border border-sky-300 focus:outline-sky-500 rounded-md '
                                                 name='location'
                                                 id='location'
                                                 type='text'
@@ -35,7 +35,7 @@ const AddRoomForm = ({
                                           </label>
                                           <select
                                                 required
-                                                className='w-full px-4 py-3 border-rose-300 focus:outline-rose-500 rounded-md'
+                                                className='w-full px-4 py-3 border-sky-300 focus:outline-sky-500 rounded-md'
                                                 name='category'
                                           >
                                                 {categories.map(category => (
@@ -53,7 +53,7 @@ const AddRoomForm = ({
                                           <DateRange
                                                 onChange={handleDates}
                                                 ranges={[dates]}
-                                                rangeColors={['#F43F5E']} />
+                                                rangeColors={['#87CEEB']} />
                                     </div>
                               </div>
                               <div className='space-y-6'>
@@ -62,7 +62,7 @@ const AddRoomForm = ({
                                                 Title
                                           </label>
                                           <input
-                                                className='w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md '
+                                                className='w-full px-4 py-3 text-gray-800 border border-sky-300 focus:outline-sky-500 rounded-md '
                                                 name='title'
                                                 id='title'
                                                 type='text'
@@ -84,7 +84,7 @@ const AddRoomForm = ({
                                                                   accept='image/*'
                                                                   hidden
                                                             />
-                                                            <div className='bg-rose-500 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-rose-500'>
+                                                            <div className='bg-sky-500 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-sky-500'>
                                                                   {uploadButtonText}
                                                             </div>
                                                       </label>
@@ -97,7 +97,7 @@ const AddRoomForm = ({
                                                       Price
                                                 </label>
                                                 <input
-                                                      className='w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md '
+                                                      className='w-full px-4 py-3 text-gray-800 border border-sky-300 focus:outline-sky-500 rounded-md '
                                                       name='price'
                                                       id='price'
                                                       type='number'
@@ -111,7 +111,7 @@ const AddRoomForm = ({
                                                       Total guest
                                                 </label>
                                                 <input
-                                                      className='w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md '
+                                                      className='w-full px-4 py-3 text-gray-800 border border-sky-300 focus:outline-sky-500 rounded-md '
                                                       name='total_guest'
                                                       id='guest'
                                                       type='number'
@@ -127,7 +127,7 @@ const AddRoomForm = ({
                                                       Bedrooms
                                                 </label>
                                                 <input
-                                                      className='w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md '
+                                                      className='w-full px-4 py-3 text-gray-800 border border-sky-300 focus:outline-sky-500 rounded-md '
                                                       name='bedrooms'
                                                       id='bedrooms'
                                                       type='number'
@@ -141,7 +141,7 @@ const AddRoomForm = ({
                                                       Bathrooms
                                                 </label>
                                                 <input
-                                                      className='w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md '
+                                                      className='w-full px-4 py-3 text-gray-800 border border-sky-300 focus:outline-sky-500 rounded-md '
                                                       name='bathrooms'
                                                       id='bathrooms'
                                                       type='number'
@@ -158,7 +158,7 @@ const AddRoomForm = ({
 
                                           <textarea
                                                 id='description'
-                                                className='block rounded-md focus:rose-300 w-full h-32 px-4 py-3 text-gray-800  border border-rose-300 focus:outline-rose-500 '
+                                                className='block rounded-md focus:sky-300 w-full h-32 px-4 py-3 text-gray-800  border border-sky-300 focus:outline-sky-500 '
                                                 name='description'
                                           ></textarea>
                                     </div>
@@ -167,7 +167,7 @@ const AddRoomForm = ({
 
                         <button
                               type='submit'
-                              className='w-full p-3 mt-5 text-center font-medium text-white transition duration-200 rounded shadow-md bg-rose-500'
+                              className='w-full p-3 mt-5 text-center font-medium text-white transition duration-200 rounded shadow-md bg-sky-500'
                         >
                               {loading ? (
                                     <TbFidgetSpinner className='m-auto animate-spin' size={24} />

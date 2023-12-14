@@ -42,7 +42,7 @@ const AuthProvider = ({ children }) => {
 
   const signInWithGoogle = () => {
     setLoading(true)
-    return signInWithPopup(auth, googleProvider)
+    return signInWithPopup(auth, googleProvider) 
   }
 
   const resetPassword = email => {
@@ -65,6 +65,20 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, currentUser => {
       setUser(currentUser)
+      if (currentUser?.email) {
+  
+
+          fetch(`${import.meta.env.VITE_API_URL}/jwt`, {
+                method: "POST",
+                headers: {
+                      "content-type": "application/json",
+                },
+                body: JSON.stringify({email: currentUser.email}),
+          })
+    
+          
+    
+      }
       console.log('current user', currentUser)
       setLoading(false)
     })
