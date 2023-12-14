@@ -3,7 +3,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../providers/AuthProvider'
 import Logo from '../Shared/Navbar/Logo'
 import { GrLogout } from 'react-icons/gr'
-import { FcHome, FcSettings } from 'react-icons/fc'
+import {  FcSettings } from 'react-icons/fc'
 import { AiOutlineBars } from 'react-icons/ai'
 // import { BsBookFill, BsFillHouseAddFill } from 'react-icons/bs'
 import GuestMenu from './GuestMenu'
@@ -81,7 +81,7 @@ const Sidebar = () => {
                                     <nav>
                                           
                                           {role && role === 'host' ? <>
-                                          <label
+                                                <label
                                                       htmlFor='Toggle3'
                                                       className='flex-col w-full  rounded-md cursor-pointer text-gray-800
                                                      justify-center  mt-6'
@@ -94,18 +94,18 @@ const Sidebar = () => {
                                                       />
                                                       
                                                           
-                                                            <span className='px-4 ml-12 py-1 rounded-l-md bg-sky-400 peer-checked:bg-gray-300'>
-                                                                        Guest
-                                                                  </span>
-                                                                  <span className='px-4 py-1 rounded-r-md bg-gray-300 peer-checked:bg-sky-400'>
-                                                                        Host
-                                                            </span>
+                                                      <span className='px-4 ml-12 py-1 rounded-l-md bg-sky-400 peer-checked:bg-gray-300'>
+                                                            Guest
+                                                      </span>
+                                                      <span className='px-4 py-1 rounded-r-md bg-gray-300 peer-checked:bg-sky-400'>
+                                                            Host
+                                                      </span>
                                                           
-                                                            {toggle ? <HostMenu /> : <GuestMenu />}
+                                                      {toggle ? <HostMenu /> : <GuestMenu />}
                                                            
                                                       
                                                       
-                                                </label> </> :<GuestMenu />}
+                                                </label> </> : <GuestMenu />}
                                           
                                     </nav>
                               </div>
@@ -136,7 +136,7 @@ const Sidebar = () => {
                         </div>
                   </div>
             </>
-      )
+      );
 }
 
 export default Sidebar

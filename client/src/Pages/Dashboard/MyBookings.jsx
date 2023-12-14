@@ -4,25 +4,33 @@ import { AuthContext } from "../../providers/AuthProvider"
 import { getAllBookings } from "../../Api/booking"
 import TableRow from "../../component/Dashboard/TableRow"
 import EmptyState from "../../component/Shared/EmptyState"
-
+import Loader from "../../component/Shared/Loader"
 const MyBookings = () => {
 
       const [bookings, setBookings] = useState([])
       const { user } = useContext(AuthContext)
-
+      const[loadings ,setLoadings]=useState(false)
       const fetchBookings = () => {
+            setLoadings(true)
             getAllBookings(user?.email)
                   .then(data => {
                         console.log(data);
                         setBookings(data)
-
+                        setLoadings(false)
+                        
                   })
       }
 
       useEffect(() => {
             fetchBookings()
       }, [user])
-      return (<>
+
+
+      if (loadings) {
+            return <Loader />
+         }
+      return (
+            <>
       {bookings && Array.isArray(bookings) && bookings.length>0?  <div className='container mx-auto px-4 sm:px-8'>
            <div className='py-8'>
                  <div className='-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto'>

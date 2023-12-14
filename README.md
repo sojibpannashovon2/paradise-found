@@ -363,3 +363,9 @@ Email Template Guide => Blog Link
 https://medium.com/jsblend/how-to-send-emails-with-templates-using-nodejs-176b72c1406d
 
 new branch Added.
+
+
+
+
+React-Spinner for Loading Data
+https://www.davidhu.io/react-spinners/

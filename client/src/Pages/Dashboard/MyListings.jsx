@@ -3,16 +3,19 @@ import { AuthContext } from "../../providers/AuthProvider"
 import { getHostsRooms } from "../../Api/rooms"
 import RoomDataRow from "../../component/Dashboard/RoomDataRow"
 import EmptyState from "../../component/Shared/EmptyState"
+import Loader from "../../component/Shared/Loader"
 
 const MyListings = () => {
   const { user } = useContext(AuthContext)
   const [hostRoomData, setHostRoomData] = useState([])
-
+  const [loading, setLoading] = useState(false);
   const fetchHostRooms = () => {
+    setLoading(true)
     getHostsRooms(user?.email)
       .then(data => {
-        console.log(data);
+        // console.log(data);
         setHostRoomData(data)
+        setLoading(false)
       }).catch(err => {
         console.log(err.message)
       })
@@ -21,7 +24,9 @@ const MyListings = () => {
     fetchHostRooms()
   }, [user])
 
-
+  if (loading) {
+    return <Loader />
+ }
   return (
     <>{hostRoomData && Array.isArray(hostRoomData) && hostRoomData.length > 0 ?
       <div className='container mx-auto px-4 sm:px-8'>

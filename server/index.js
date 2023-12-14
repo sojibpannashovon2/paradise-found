@@ -8,7 +8,7 @@ const port = process.env.PORT || 12000
 // This is your test secret API key.
 const stripe = require("stripe")(process.env.PAYMENT_SECRET_KEY);
 // middleware
-
+const jwt = require('jsonwebtoken')
 const corsOptions = {
       origin: '*',
       credentials: true,
@@ -18,6 +18,14 @@ app.use(cors(corsOptions))
 app.use(express.json())
 app.use(morgan('dev'))
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
+
+
+
+app.post('/jwt', async (req, res) => {
+      const {email} = req.body
+      console.log(email)
+      res.send(email)
+})
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.yaanftr.mongodb.net/?retryWrites=true&w=majority`;
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version

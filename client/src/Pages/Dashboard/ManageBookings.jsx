@@ -1,28 +1,35 @@
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../providers/AuthProvider"
-
+import Loader from "../../component/Shared/Loader"
 import { getHostBookings } from "../../Api/booking"
 import TableRow from "../../component/Dashboard/TableRow"
+import EmptyState from "../../component/Shared/EmptyState"
 
 const ManageBookings = () => {
 
       const [bookings, setBookings] = useState([])
       const { user } = useContext(AuthContext)
-
+      const [loadingp, setLoadingp] = useState(false);
       const fetchBookings = () => {
+            setLoadingp(true)
             getHostBookings(user?.email)
                   .then(data => {
-                        console.log(data);
+                        // console.log(data);
                         setBookings(data)
-
+                        setLoadingp(false)
+                        
                   })
       }
 
       useEffect(() => {
             fetchBookings()
       }, [user])
+      if (loadingp) {
+            return <Loader />
+         }
       return (
-            <div className='container mx-auto px-4 sm:px-8'>
+            <>
+            {bookings && Array.isArray(bookings) && bookings.length>0?  <div className='container mx-auto px-4 sm:px-8'>
                   <div className='py-8'>
                         <div className='-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto'>
                               <div className='inline-block min-w-full shadow rounded-lg overflow-hidden'>
@@ -72,7 +79,12 @@ const ManageBookings = () => {
                               </div>
                         </div>
                   </div>
-            </div>
+                  </div> : <EmptyState
+                              message={`Your Rooms Hasn't Booked Yet !!`}
+                              address={`/`}
+                              label={`Go Back`}
+                  />}
+            </>
       )
 }
 
