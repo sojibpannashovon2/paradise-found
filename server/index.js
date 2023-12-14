@@ -22,7 +22,7 @@ const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
 
 
 app.post('/jwt', async (req, res) => {
-      const {email} = req.body
+      const { email } = req.body
       console.log(email)
       res.send(email)
 })
@@ -180,7 +180,7 @@ async function run() {
                   }
                   const update = await roomsCollection.updateOne(query, updateDoc)
                   res.send(update)
-                
+
             })
 
 
@@ -249,10 +249,10 @@ async function run() {
 
 
             // Send a ping to confirm a successful connection
-            // await client.db('admin').command({ ping: 1 })
-            // console.log(
-            //       'Pinged your deployment. You successfully connected to MongoDB!'
-            // )
+            await client.db('admin').command({ ping: 1 })
+            console.log(
+                  'Pinged your deployment. You successfully connected to MongoDB!'
+            )
       } finally {
             // Ensures that the client will close when you finish/error
             // await client.close();
