@@ -21,11 +21,7 @@ const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
 
 
 
-app.post('/jwt', async (req, res) => {
-      const { email } = req.body
-      console.log(email)
-      res.send(email)
-})
+
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.yaanftr.mongodb.net/?retryWrites=true&w=majority`;
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -66,11 +62,44 @@ const sendMail = (emailData, emailAddress) => {
 
 }
 
+//Verify Jwt or Validation of JWT token
+const verifyJWT = (req, res, next) => {
+      const authoraization = req.headers.authorization
+      if (!authoraization) {
+            return res
+                  .status(401)
+                  .send({ error: true, message: `Unauthorized Access` })
+      }
+      const token = authoraization.split(' ')[1]
+      console.log(token);
+      //verify token
+      jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+            if (err) {
+                  return res
+                        .status(401)
+                        .send({ error: true, message: `Unauthorized Access` })
+            }
+            req.decoded = decoded
+            next();
+      })
+
+}
+
 async function run() {
       try {
             const usersCollection = client.db('paradiseDb').collection('users')
             const roomsCollection = client.db('paradiseDb').collection('rooms')
             const bookingsCollection = client.db('paradiseDb').collection('bookings')
+
+            //Genarate Jwt token 
+            app.post('/jwt', async (req, res) => {
+                  const email = req.body
+                  const token = jwt.sign(email, process.env.ACCESS_TOKEN_SECRET, {
+                        expiresIn: `1h`,
+                  })
+                  // console.log(token)
+                  res.send({ token })
+            })
 
             //Genarate client secret for stripe payment
 
@@ -134,11 +163,17 @@ async function run() {
 
             //Get Host spechific Rooms data
 
-            app.get('/rooms/:email', async (req, res) => {
+            app.get('/rooms/:email', verifyJWT, async (req, res) => {
+                  const decodedEmail = req.decoded.email;
                   const email = req.params.email;
-                  if (!email) {
-                        res.send([])
+                  if (email != decodedEmail) {
+                        return res
+                              .status(403)
+                              .send({ error: true, message: `Forbiden Access` })
                   }
+                  // if (!email) {
+                  //       res.send([])
+                  // }
                   const query = { 'host.email': email }
                   const result = await roomsCollection.find(query).toArray()
                   res.send(result)
@@ -249,10 +284,10 @@ async function run() {
 
 
             // Send a ping to confirm a successful connection
-            await client.db('admin').command({ ping: 1 })
-            console.log(
-                  'Pinged your deployment. You successfully connected to MongoDB!'
-            )
+            // await client.db('admin').command({ ping: 1 })
+            // console.log(
+            //       'Pinged your deployment. You successfully connected to MongoDB!'
+            // )
       } finally {
             // Ensures that the client will close when you finish/error
             // await client.close();
