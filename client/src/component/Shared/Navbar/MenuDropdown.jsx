@@ -8,7 +8,7 @@ import { becomeHost } from '../../../Api/auth';
 import toast from 'react-hot-toast';
 const MenuDropdown = () => {
       const { user, logOut, role, setRole } = useContext(AuthContext);
-      console.log(role);
+      // console.log(role);
       const [isOpen, setIsOpen] = useState(false)
       const [modal, setModal] = useState(false)
       const toggleOpen = useCallback(() => {

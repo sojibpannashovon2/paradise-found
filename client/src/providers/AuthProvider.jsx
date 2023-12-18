@@ -12,7 +12,7 @@ import {
 } from 'firebase/auth'
 import { app } from '../firebase/firebase.config'
 import { getRole } from '../Api/auth'
-
+import axios from "axios"
 export const AuthContext = createContext(null)
 
 const auth = getAuth(app)
@@ -42,7 +42,7 @@ const AuthProvider = ({ children }) => {
 
   const signInWithGoogle = () => {
     setLoading(true)
-    return signInWithPopup(auth, googleProvider) 
+    return signInWithPopup(auth, googleProvider)
   }
 
   const resetPassword = email => {
@@ -65,22 +65,34 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, currentUser => {
       setUser(currentUser)
-      if (currentUser?.email) {
-  
+      if (currentUser && currentUser?.email) {
 
-          fetch(`${import.meta.env.VITE_API_URL}/jwt`, {
-                method: "POST",
-                headers: {
-                      "content-type": "application/json",
-                },
-                body: JSON.stringify({email: currentUser.email}),
-          })
-    
-          
-    
+
+        // fetch(`${import.meta.env.VITE_API_URL}/jwt`, {
+        //   method: "POST",
+        //   headers: {
+        //     "content-type": "application/json",
+        //   },
+        //   body: JSON.stringify({ email: currentUser.email }),
+        // }).then(res => res.json())
+        //   .then(data => {
+
+        //     console.log(data)
+        //     localStorage.setItem("access-token", data.token)
+        //   })
+        axios.post(`${import.meta.env.VITE_API_URL}/jwt`, {
+          email: currentUser?.email,
+        }).then(data => {
+          console.log(data.data.token);
+          localStorage.setItem("access-token", data.data.token)
+          setLoading(false)
+        })
       }
-      console.log('current user', currentUser)
-      setLoading(false)
+      else {
+        localStorage.removeItem("access-token")
+        setLoading(false)
+      }
+      // console.log('current user', currentUser)
     })
     return () => {
       return unsubscribe()
