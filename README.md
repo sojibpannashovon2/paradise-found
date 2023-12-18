@@ -419,27 +419,28 @@ require('crypto').randomBytes(64).toString('hex')
 
 
 ### Verify Jwt or Validation of JWT token
-const verifyJWT = (req, res, next) => {
-      const authoraization = req.headers.authorization
-      if (!authoraization) {
-            return res
-                  .status(401)
-                  .send({ error: true, message: `Unauthorized Access` })
-      }
-      const token = authoraization.split(' ')[1]
-      console.log(token);
-      //verify token
-      jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-            if (err) {
-                  return res
-                        .status(401)
-                        .send({ error: true, message: `Unauthorized Access` })
-            }
-            req.decoded = decoded
-            next();
-      })
 
-}
+                                    const verifyJWT = (req, res, next) => {
+                                          const authoraization = req.headers.authorization
+                                          if (!authoraization) {
+                                                return res
+                                                      .status(401)
+                                                      .send({ error: true, message: `Unauthorized Access` })
+                                          }
+                                          const token = authoraization.split(' ')[1]
+                                          console.log(token);
+                                          //verify token
+                                          jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+                                                if (err) {
+                                                      return res
+                                                            .status(401)
+                                                            .send({ error: true, message: `Unauthorized Access` })
+                                                }
+                                                req.decoded = decoded
+                                                next();
+                                          })
+                                    
+                                    }
 
 
  ### Get Host spechific Rooms data and verify that only the spechific or valid or same  user can see the routes data 
