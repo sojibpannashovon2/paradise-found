@@ -18,6 +18,7 @@
     "mongodb": "^5.5.0",
     "morgan": "^1.10.0",
     "nodemailer": "^6.9.7",
+    "nodemon": "^3.0.3",
     "strapi-provider-email-nodemailer": "^3.6.11",
     "stripe": "^14.7.0"
   }
