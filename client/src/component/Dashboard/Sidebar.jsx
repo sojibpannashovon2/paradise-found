@@ -3,7 +3,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../providers/AuthProvider'
 import Logo from '../Shared/Navbar/Logo'
 import { GrLogout } from 'react-icons/gr'
-import {  FcSettings } from 'react-icons/fc'
+import { FcSettings } from 'react-icons/fc'
 import { AiOutlineBars } from 'react-icons/ai'
 // import { BsBookFill, BsFillHouseAddFill } from 'react-icons/bs'
 import GuestMenu from './GuestMenu'
@@ -79,7 +79,7 @@ const Sidebar = () => {
                               <div
                                     className='flex flex-col justify-between flex-1 mt-6'>
                                     <nav>
-                                          
+
                                           {role && role === 'host' ? <>
                                                 <label
                                                       htmlFor='Toggle3'
@@ -92,21 +92,21 @@ const Sidebar = () => {
                                                             type='checkbox'
                                                             className='hidden peer'
                                                       />
-                                                      
-                                                          
+
+
                                                       <span className='px-4 ml-12 py-1 rounded-l-md bg-sky-400 peer-checked:bg-gray-300'>
                                                             Guest
                                                       </span>
                                                       <span className='px-4 py-1 rounded-r-md bg-gray-300 peer-checked:bg-sky-400'>
                                                             Host
                                                       </span>
-                                                          
+
                                                       {toggle ? <HostMenu /> : <GuestMenu />}
-                                                           
-                                                      
-                                                      
+
+
+
                                                 </label> </> : <GuestMenu />}
-                                          
+
                                     </nav>
                               </div>
                         </div>

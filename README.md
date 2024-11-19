@@ -108,6 +108,7 @@ navigate('/')
 return (
 <>
 {/_ Small Screen Navbar _/}
+
 <div className='bg-gray-100 text-gray-800 flex justify-between md:hidden'>
 <div>
 <div className='block cursor-pointer p-4 font-bold'>
@@ -290,7 +291,7 @@ export default Sidebar
                                     </button>
                               </div>
 
-Data Loader(React Spinner)
+### Data Loader(React Spinner)
 
 Link: https://www.davidhu.io/react-spinners/
 
@@ -306,7 +307,7 @@ Link: https://www.davidhu.io/react-spinners/
                               <PacmanLoader size={50} color='red' />
             </div>
 
-4.  Query-string
+4.  ## Query-string
 
            import qs from "query-string"
 
@@ -354,18 +355,151 @@ Link: https://www.davidhu.io/react-spinners/
 
                 export default CategoryBox;
 
-#Nodemailer Component
+## Nodemailer Component
 
 Nodemailer blog -> Blog Link
 https://miracleio.me/snippets/use-gmail-with-nodemailer/
 
-Email Template Guide => Blog Link
+## Email Template Guide => Blog Link
+
 https://medium.com/jsblend/how-to-send-emails-with-templates-using-nodejs-176b72c1406d
 
 new branch Added.
 
+# React-Spinner for Loading Data
 
-
-
-React-Spinner for Loading Data
 https://www.davidhu.io/react-spinners/
+
+### For 64 bit genarate secret key
+
+require('crypto').randomBytes(64).toString('hex')
+
+# Genarate Jwt token
+
+            app.post('/jwt', async (req, res) => {
+                  const email = req.body
+                  const token = jwt.sign(email, process.env.ACCESS_TOKEN_SECRET, {
+                        expiresIn: `1h`,
+                  })
+                  console.log(token)
+                  res.send({ token })
+            })
+
+# Post token from client site using axios. Here another default system is provide for poating data to backend. Finally save access token to local storage and remove data from localStorage according to the current user existents.
+
+if (currentUser && currentUser?.email) {
+
+        // fetch(`${import.meta.env.VITE_API_URL}/jwt`, {
+        //   method: "POST",
+        //   headers: {
+        //     "content-type": "application/json",
+        //   },
+        //   body: JSON.stringify({ email: currentUser.email }),
+        // }).then(res => res.json())
+        //   .then(data => {
+
+        //     console.log(data)
+        //     localStorage.setItem("access-token", data.token)
+        //   })
+        axios.post(`${import.meta.env.VITE_API_URL}/jwt`, {
+          email: currentUser?.email,
+        }).then(data => {
+          console.log(data.data.token);
+          localStorage.setItem("access-token", data.data.token)
+          setLoading(false)
+        })
+      }
+      else {
+        localStorage.removeItem("access-token")
+        setLoading(false)
+      }
+
+### Verify Jwt or Validation of JWT token
+
+                                    const verifyJWT = (req, res, next) => {
+                                          const authoraization = req.headers.authorization
+                                          if (!authoraization) {
+                                                return res
+                                                      .status(401)
+                                                      .send({ error: true, message: `Unauthorized Access` })
+                                          }
+                                          const token = authoraization.split(' ')[1]
+                                          console.log(token);
+                                          //verify token
+                                          jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+                                                if (err) {
+                                                      return res
+                                                            .status(401)
+                                                            .send({ error: true, message: `Unauthorized Access` })
+                                                }
+                                                req.decoded = decoded
+                                                next();
+                                          })
+
+                                    }
+
+### Get Host spechific Rooms data and verify that only the spechific or valid or same user can see the routes data
+
+            app.get('/rooms/:email', verifyJWT, async (req, res) => {
+                  const decodedEmail = req.decoded.email;
+                  const email = req.params.email;
+                  if (email != decodedEmail) {
+                        return res
+                              .status(403)
+                              .send({ error: true, message: `Forbiden Access` })
+                  }
+                  // if (!email) {
+                  //       res.send([])
+                  // }
+                  const query = { 'host.email': email }
+                  const result = await roomsCollection.find(query).toArray()
+                  res.send(result)
+            })
+
+##Axios Intercept using
+
+              import axios from "axios";
+              import { useContext, useEffect } from "react";
+              import { useNavigate } from "react-router-dom";
+              import { AuthContext } from "../providers/AuthProvider";
+
+              // ALL OPERARTION WILL BE DONE BY THIS AXIOS SECURE
+              const axiosSecure = axios.create({
+                baseURL: `${import.meta.env.VITE_API_URL}`,
+              });
+
+              const useAxiosSecure = () => {
+                const navigate = useNavigate();
+                const { logOut } = useContext(AuthContext);
+                useEffect(() => {
+                  //Intercept Request(client ----- to ----server)
+                  axiosSecure.interceptors.request.use((config) => {
+                    const token = `Bearer ${localStorage.getItem("access-token")}`;
+                    if (token) {
+                      //Headers add to the every
+                      config.headers.Authorization = token;
+                    }
+                    return config;
+                  });
+                  //Intercept Response(server ---- to ---- client)
+                  axiosSecure.interceptors.response.use(
+                    (response) => response,
+
+                    async (error) => {
+                      if (
+                        (error.response && error.response.status === 401) ||
+                        error.response.status === 403
+                      ) {
+                        await logOut();
+                        navigate("/login");
+                      }
+
+                      return Promise.reject(error);
+                    }
+                  );
+                }, [logOut, navigate, axiosSecure]);
+
+                return [axiosSecure];
+              };
+
+              export default useAxiosSecure;
