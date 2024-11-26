@@ -6,6 +6,7 @@ import RoomInfo from "./RoomInfo";
 import RoomReservation from "./RoomReservation";
 import { useLoaderData } from "react-router-dom";
 import ScrollingImages from "../../component/RoomDetails/ScrollingImages";
+import ReviewRoom from "../../component/RoomDetails/ReviewRoom";
 
 const RoomDetails = () => {
   const roomData = useLoaderData();
@@ -64,6 +65,8 @@ const RoomDetails = () => {
             </h1>
             <ScrollingImages roomData={roomData} />
           </div>
+
+          <ReviewRoom />
         </div>
       </div>
     </Container>
