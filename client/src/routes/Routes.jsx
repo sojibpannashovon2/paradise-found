@@ -12,6 +12,7 @@ import MyBookings from "../Pages/Dashboard/MyBookings";
 import MyListings from "../Pages/Dashboard/MyListings";
 import ManageBookings from "../Pages/Dashboard/ManageBookings";
 import { getRoom } from "../Api/rooms";
+import WriteReviews from "../component/RoomDetails/WriteReviews";
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,11 @@ export const router = createBrowserRouter([
         loader: ({ params }) => getRoom(params.id),
       },
     ],
+  },
+
+  {
+    path: "/room/review",
+    element: <WriteReviews />,
   },
 
   //This section is Authentication part
