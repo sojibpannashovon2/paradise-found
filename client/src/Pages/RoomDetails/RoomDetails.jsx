@@ -7,6 +7,7 @@ import RoomReservation from "./RoomReservation";
 import { useLoaderData } from "react-router-dom";
 import ScrollingImages from "../../component/RoomDetails/ScrollingImages";
 import ReviewRoom from "../../component/RoomDetails/ReviewRoom";
+import NewFooter from "../../component/Shared/Footer/NewFooter";
 
 const RoomDetails = () => {
   const roomData = useLoaderData();
@@ -66,8 +67,6 @@ const RoomDetails = () => {
             <ScrollingImages roomData={roomData} />
           </div>
 
-          <ReviewRoom roomData={roomData} />
-
           <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d40875.8173323748!2d92.25224206160642!3d20.848249202547695!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30ae1050b22de32d%3A0xbcc6773394cd8c5b!2sTeknaf%20Beach!5e0!3m2!1sen!2sbd!4v1732644668417!5m2!1sen!2sbd"
@@ -80,6 +79,8 @@ const RoomDetails = () => {
               title="Teknaf Beach Map"
             ></iframe>
           </div>
+
+          <NewFooter />
         </div>
       </div>
     </Container>
@@ -87,3 +88,4 @@ const RoomDetails = () => {
 };
 
 export default RoomDetails;
+<ReviewRoom roomData={roomData} />;
