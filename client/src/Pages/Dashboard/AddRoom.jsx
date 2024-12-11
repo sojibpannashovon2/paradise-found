@@ -38,6 +38,15 @@ const AddRoom = () => {
     const bedrooms = event.target.bedrooms.value;
     const bathrooms = event.target.bathrooms.value;
 
+    const name1 = event.target.name1.value;
+    const image1 = event.target.image1.value;
+    const name2 = event.target.name2.value;
+    const image2 = event.target.image2.value;
+    const name3 = event.target.name3.value;
+    const image3 = event.target.image3.value;
+    const name4 = event.target.name4.value;
+    const image4 = event.target.image4.value;
+
     const description = event.target.description.value;
     const category = event.target.category.value;
 
@@ -63,6 +72,14 @@ const AddRoom = () => {
           bedrooms,
           description,
           category,
+          name1,
+          image1,
+          name2,
+          image2,
+          name3,
+          image3,
+          name4,
+          image4,
         };
         console.log(roomData);
         //save room to dataBase
