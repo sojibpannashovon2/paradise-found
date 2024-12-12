@@ -13,6 +13,7 @@ import MyListings from "../Pages/Dashboard/MyListings";
 import ManageBookings from "../Pages/Dashboard/ManageBookings";
 import { getRoom } from "../Api/rooms";
 import WriteReviews from "../component/RoomDetails/WriteReviews";
+import WriteReviewDetails from "../component/RoomDetails/WriteReviewDetails";
 
 export const router = createBrowserRouter([
   {
@@ -36,8 +37,8 @@ export const router = createBrowserRouter([
   },
 
   {
-    path: "/room/review",
-    element: <WriteReviews />,
+    path: "/room_review",
+    element: <WriteReviewDetails />,
   },
 
   //This section is Authentication part

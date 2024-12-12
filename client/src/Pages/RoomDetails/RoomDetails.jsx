@@ -60,14 +60,7 @@ const RoomDetails = () => {
             </div>
           </div>
 
-          <div className="flex justify-between items-center border boder-blue-700 p-8 rounded-md shadow-md">
-            <p>You Can Left Your Review Here</p>
-            <NavLink to={`/room/review`} roomData={roomData}>
-              <h2 className="text-transparent bg-clip-text bg-gradient-to-r from-[#2dd4bf] to-[#d946ef] animate-text-gradient text-lg font-semibold font-sans">
-                Write Revew
-              </h2>
-            </NavLink>
-          </div>
+          <WriteReviews />
           <div className="py-5">
             <h1 className="pb-3 text-green-700 text-xl font-mono">
               Discover even more to explore at this amazing destination!
