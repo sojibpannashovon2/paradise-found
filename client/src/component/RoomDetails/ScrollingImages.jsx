@@ -1,5 +1,6 @@
 const ScrollingImages = ({ roomData }) => {
   // Dynamically get the image links
+  console.log(roomData);
   const images = [
     roomData.image1,
     roomData.image2,

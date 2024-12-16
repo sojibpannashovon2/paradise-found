@@ -12,3 +12,12 @@ export const addReview = async (reviewData) => {
   const data = await response.json();
   return data;
 };
+
+// Get Review from database
+
+export const getAllReview = async () => {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/reviews`);
+  const data = await response.json();
+
+  return data;
+};

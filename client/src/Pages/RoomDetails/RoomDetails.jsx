@@ -26,8 +26,8 @@ const RoomDetails = () => {
           </div>
           <div className="flex pb-2">
             <div className="h-96 w-[50%]">
-              <h1 className="text-green-700 pb-2 text-xl">
-                Where you will seleep ?
+              <h1 className="text-green-700 pb-2 text-xl font-serif">
+                Where you will stay?
               </h1>
 
               <img
@@ -65,7 +65,7 @@ const RoomDetails = () => {
             <h1 className="pb-3 text-green-700 text-xl font-mono">
               Discover even more to explore at this amazing destination!
             </h1>
-            <ScrollingImages roomData={roomData} />
+            <ScrollingImages roomData={roomData} key={roomData._id} />
           </div>
           <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <iframe
@@ -79,7 +79,7 @@ const RoomDetails = () => {
               title="Teknaf Beach Map"
             ></iframe>
           </div>
-          <ReviewRoom roomData={roomData} />
+          <ReviewRoom roomData={roomData} key={roomData._id} />
           <NewFooter />
         </div>
       </div>

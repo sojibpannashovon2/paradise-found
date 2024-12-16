@@ -15,11 +15,19 @@ export const addRoom = async (roomData) => {
 
 // Get all rooms data
 
-export const getAllRooms = async () => {
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/rooms`);
+// export const getAllRooms = async () => {
+//   const response = await fetch(`${import.meta.env.VITE_API_URL}/rooms`);
+//   const data = await response.json();
+//   return data;
+// };
+
+export const getAllRooms = async (search = "") => {
+  const query = search ? `?search=${encodeURIComponent(search)}` : ""; // Add search query if provided
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/rooms${query}`);
   const data = await response.json();
   return data;
 };
+
 // Get filtered  rooms for host
 
 // export const getHostsRooms = async (email) => {

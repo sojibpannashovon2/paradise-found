@@ -6,15 +6,16 @@ import { addReview } from "../../Api/review";
 
 const WriteReviewDetails = () => {
   const { user } = useContext(AuthContext);
-  console.log(user);
+  // console.log(user);
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const ratting = event.target.ratting.value;
     const comment = event.target.comment.value;
+    const time = event.target.time.value;
 
-    console.log(ratting, comment);
+    console.log(ratting, comment, time);
 
     const reviewData = {
       reviewer: {
@@ -23,6 +24,7 @@ const WriteReviewDetails = () => {
       },
       ratting,
       comment,
+      time,
     };
 
     addReview(reviewData)
@@ -53,6 +55,18 @@ const WriteReviewDetails = () => {
                   type="text"
                   name="ratting"
                   placeholder="Ratting within 0.0 to 5.0"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-600 mb-2">
+                  Use this website from
+                </label>
+                <input
+                  className="border border-green-800 px-8 py-3 rounded-md"
+                  type="text"
+                  name="time"
+                  placeholder="Give year or month or day"
                   required
                 />
               </div>
