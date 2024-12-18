@@ -82,6 +82,7 @@ async function run() {
   try {
     const usersCollection = client.db("paradiseDb").collection("users");
     const roomsCollection = client.db("paradiseDb").collection("rooms");
+    const reviewsCollection = client.db("paradiseDb").collection("reviews");
     const bookingsCollection = client.db("paradiseDb").collection("bookings");
 
     //Genarate Jwt token
@@ -146,11 +147,43 @@ async function run() {
       res.send(result);
     });
 
+    // save review data to database
+
+    app.post("/reviews", async (req, res) => {
+      const review = req.body;
+      const result = await reviewsCollection.insertOne(review);
+      res.send(result);
+    });
+
+    //Get Rooms data
+
+    app.get("/reviews", async (req, res) => {
+      const result = await reviewsCollection.find().toArray();
+      res.send(result);
+    });
+
     //Get Rooms data
 
     app.get("/rooms", async (req, res) => {
-      const result = await roomsCollection.find().toArray();
-      res.send(result);
+      try {
+        const { search } = req.query;
+        const filter = {};
+
+        if (search) {
+          filter.$or = [
+            { location: { $regex: search, $options: "i" } },
+            { title: { $regex: search, $options: "i" } },
+          ];
+        }
+
+        const result = await roomsCollection.find(filter).toArray();
+        res.send(result);
+      } catch (error) {
+        console.error("Error fetching rooms:", error);
+        res
+          .status(500)
+          .send({ error: "An error occurred while fetching rooms data." });
+      }
     });
 
     //Get Host spechific Rooms data

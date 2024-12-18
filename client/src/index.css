@@ -14,9 +14,3 @@
   background-size: 200%;
   animation: gradient 3s linear infinite;
 }
-
-@property --border-angle {
-  inherits: false;
-  initial-value: 0deg;
-  syntax: "<angle>";
-}

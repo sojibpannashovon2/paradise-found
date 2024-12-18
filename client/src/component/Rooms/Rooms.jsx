@@ -40,11 +40,10 @@ const Rooms = () => {
   }
   //console.log(rooms);
   return (
-    <div>
+    <div className=" ">
       {/* Search Component */}
-      <div className="my-10">
-        <Search onSearch={handleSearch} />
-      </div>
+
+      <Search onSearch={handleSearch} />
 
       {/* Room Cards */}
       {rooms && rooms.length > 0 ? (
