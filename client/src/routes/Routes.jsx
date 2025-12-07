@@ -14,6 +14,9 @@ import ManageBookings from "../Pages/Dashboard/ManageBookings";
 import { getRoom } from "../Api/rooms";
 import WriteReviews from "../component/RoomDetails/WriteReviews";
 import WriteReviewDetails from "../component/RoomDetails/WriteReviewDetails";
+import AdminLayout from "../layouts/AdminLayout";
+import AdminDashboard from "../Pages/AdminDashboard/AdminDashboard";
+import UserMangement from "../Pages/AdminDashboard/UserMangement";
 
 export const router = createBrowserRouter([
   {
@@ -72,6 +75,28 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/manage-bookings",
         element: <ManageBookings />,
+      },
+    ],
+  },
+
+  //Admin Layout
+
+  {
+    path: "admin",
+    element: <AdminLayout />,
+
+    children: [
+      {
+        path: "/admin/login",
+        element: <Login />,
+      },
+      {
+        path: "/admin/dashboard",
+        element: <AdminDashboard />,
+      },
+      {
+        path: "/admin/user",
+        element: <UserMangement />,
       },
     ],
   },
