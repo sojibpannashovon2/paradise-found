@@ -229,7 +229,7 @@ export default Sidebar
 
 ----------------------------------- New Techonogy Used -------------------------------------
 
-1.  React-date-range
+1.  React-date-range importent for calender
 
     Installation
     npm install --save react-date-range
